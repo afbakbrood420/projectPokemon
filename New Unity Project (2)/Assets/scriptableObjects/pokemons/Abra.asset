@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d7742c93875684686a7d6b4633d828, type: 3}
+  m_Name: Abra
+  m_EditorClassIdentifier: 
+  HP: 25
+  Attack: 20
+  Defense: 15
+  SpAttack: 105
+  SpDefense: 55
+  Speed: 90
+  moves:
+  - {fileID: 11400000, guid: 1c02c8242f168d544b448a78f96d8370, type: 2}
+  - {fileID: 11400000, guid: fa480c1d2a2c6b94998bfbef8c61f578, type: 2}
+  - {fileID: 11400000, guid: 68b58044e1ee32a45a66371fb6f4032b, type: 2}
+  - {fileID: 11400000, guid: d3fc826ecbe9ea94abdf478a278fdc06, type: 2}
+  pokedexEntry: charizard a beast
+  sprite: {fileID: 21300000, guid: e545348c1f7f39b469c1b243bd6b6aba, type: 3}
+  shinySprite: {fileID: 21300000, guid: 6e79c83ae03e8bb4caa2474c48410fbd, type: 3}
+  types:
+  - {fileID: 11400000, guid: 69ce36f61d9af2341aebef2219b78a96, type: 2}
