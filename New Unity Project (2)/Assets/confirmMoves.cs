@@ -23,8 +23,14 @@ public class confirmMoves : MonoBehaviour
     private string debugPackage;
     private int count = 0;
 
+    /*
+     * this script is responsible for the creation of all the move lists. This includes making sure that they all have the right
+     * pokemon selected. there is a big part of the script that is just there for debugging.
+    */
+
     void Start()
     {
+        //for debugging only
         if (useTestParty)
         {
             count = 0;
@@ -36,26 +42,31 @@ public class confirmMoves : MonoBehaviour
                 count += 1;
             }
         }
+        //for the real deal
         else
         {
             count = 0;
-            foreach (Pokemon pokemon in (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party).pokemons)
+            foreach (Pokemon pokemon in (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party).pokemons) //get all the chosen pokemon and loop through it
             {
-                prefabToAdd = Instantiate(moveListPrefab, moveListParent.transform);
-                (prefabToAdd.GetComponent("moveCollector") as moveCollector).setPokemon(pokemon, count);
-                moveLists.Add(prefabToAdd);
+                prefabToAdd = Instantiate(moveListPrefab, moveListParent.transform); //build all the list objects and set the parent to movelistParent
+                (prefabToAdd.GetComponent("moveCollector") as moveCollector).setPokemon(pokemon, count); //make sure that list has the right pokemon
+                moveLists.Add(prefabToAdd); 
                 count += 1;
             }
         }
-        confirmButton.onClick.AddListener(collectMoves);
+        confirmButton.onClick.AddListener(collectMoves); //makes sure that the next comment is made reality
     }
+
+    //this method is called once the confirmbutton is pressed
     void collectMoves()
     {
         movesOfPokemons.Clear();
         foreach (GameObject moveList in moveLists)
         {
-            movesOfPokemons.Add((moveList.GetComponent("moveCollector") as moveCollector).getMoves());
+            movesOfPokemons.Add((moveList.GetComponent("moveCollector") as moveCollector).getMoves()); //get the moves from all the move slots and put it in to a list
         }
+
+        //for debugging only
         if (enableDebug)
         {
             count = 0;

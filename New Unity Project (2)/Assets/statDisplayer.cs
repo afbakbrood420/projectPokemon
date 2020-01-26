@@ -7,6 +7,10 @@ public class statDisplayer : MonoBehaviour
 {
     public Text stat;
     public Text value;
+
+    /*
+     * this script makes sure that the stat displayers are compatible with commands
+    */
     public void setValue(int newValue)
     {
         value.text = newValue.ToString();

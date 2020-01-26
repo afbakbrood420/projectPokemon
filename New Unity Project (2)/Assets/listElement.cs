@@ -14,6 +14,10 @@ public class listElement : MonoBehaviour
     private Color selectedColor;
     private GameObject listmanager;
     
+    /*
+     * this is in collaboration with the listmanager, responsible for the list and the ability to interact with them
+    */
+
     void Start()
     {
         listmanager = transform.parent.gameObject;
@@ -30,6 +34,7 @@ public class listElement : MonoBehaviour
         //Debug.Log(newIndex.ToString());
     }
 
+    //this is called by the manager so is the next method
     public void deselect()
     {
         img.color =  new Color(255,255,255,130);
@@ -38,8 +43,10 @@ public class listElement : MonoBehaviour
     {
         img.color = selectedColor;
     }
+
+    //this is called when the button is pressed
     void requestSelect()
     {
-        listmanager.SendMessage("changeSelectedPokemon", pokemonIndex);
+        listmanager.SendMessage("changeSelectedPokemon", pokemonIndex); 
     }
 }

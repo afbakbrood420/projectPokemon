@@ -14,13 +14,16 @@ public class PokemonSelector : MonoBehaviour
     private List<string> pokemonNames = new List<string> { };
     private List<Pokemon> pkmDatabase;
 
-    //somehow subscribe to the list with all pokemon inside
+    /*
+     this script manages the dropdown menu: add all the pokemon names and makes sure 
+     the picture is updated with the change of one pokemon.
+     */
 
     void onSelectChange()
     {
         //get the new pokemon and store it in pokemon
         //this script runs when you pick a different pokemon on the dropdown menu, and makes sure that the sprite updates.
-        pokemon = pkmDatabase[selector.value]; //the selector.value returns an index of the list of options. So because I gave 
+        pokemon = pkmDatabase[selector.value]; //the selector.value returns an index of the list of options. And because I gave 
                                             //him the pokemons list, I can return the pokemon
         display.sprite = pokemon.sprite; //update the sprite
     }

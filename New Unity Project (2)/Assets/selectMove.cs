@@ -15,6 +15,11 @@ public class selectMove : MonoBehaviour
     
     public GameObject lowestRenderer;
 
+    /*
+     * this script sits on the draggable objects in the moveselector scene. This makes sure that this can represent a move
+    */
+
+    //this is responsible that the visual elements show the right info
     public void setUp()
     {
         txtName.text = Move.name;
@@ -28,6 +33,8 @@ public class selectMove : MonoBehaviour
             img.sprite = physical;
         }
     }
+
+    //this is called when the creator of this object assigns a new move
     void setMove(move newMove)
     {
         Move = newMove;

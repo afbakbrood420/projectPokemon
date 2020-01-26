@@ -9,12 +9,18 @@ public class popUpWindow : MonoBehaviour
     public Text msgText;
     public List<Text> texts = new List<Text> { };
     public List<Image> images = new List<Image> { };
-    // Start is called before the first frame update
+
+    /*
+     * this script is responsable for the pop up window. It makes sure that it shows and hide, displays the message, etc.
+    */
+
     private void Start()
     {
         hideAll();
         btn.onClick.AddListener(hideAll);
     }
+
+    //makes sure all is hidden, this is called when the ok button is pressed
     void hideAll()
     {
         btn.enabled = false;
@@ -27,6 +33,8 @@ public class popUpWindow : MonoBehaviour
             text.enabled = false;
         }
     }
+
+    //makes sure all is shown
     void showAll()
     {
         btn.enabled = true;
@@ -39,6 +47,8 @@ public class popUpWindow : MonoBehaviour
             text.enabled = true;
         }
     }
+
+    //this is called by various gameobjects which want to notify the player of something
     void notification(string msg)
     {
         msgText.text = msg;

@@ -10,13 +10,20 @@ public class draggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDra
     private snappable snappingComponent;
     private bool notYetReceivedKey = true;
 
-    public GameObject ParentWhileDragging; //dit doen we zodat je de moves niet achter de slots kan schuiven.
+    public GameObject ParentWhileDragging; //this makes sure that the draggable objects cant be hidden behind the slot
     public int key;
 
-    public void snapTo(GameObject slot)
+    /*
+     * this script makes the object that it is attached to a draggable object.
+     * It is designed so that you can't leave the object just somewhere, it always snaps to a snappable object
+     */ 
+
+
+    //this is called right at the start when this object is created
+    public void snapTo(GameObject slot) 
     {
-        rt.position = slot.transform.position;
-        snap();
+        rt.position = slot.transform.position; //move to the slot
+        snap(); //snap() gets the closest snappable object, so its an easy way to snap right to an object
     }
 
     private void Start()
@@ -25,18 +32,21 @@ public class draggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDra
         ParentWhileDragging = GameObject.FindGameObjectWithTag("draggableObjectRenderer");
         snap();
     }
+    
+    //this is called on the begginning of the drag motion
     public void OnBeginDrag(PointerEventData eventData)
     {
         snappingTo.SendMessage("onLeaveSnap"); //make sure the other slot apears as free to the new draggable object
         gameObject.transform.SetParent(ParentWhileDragging.transform); //make sure that we are on top of the renderlayer, and not moving while you scroll the bar
-        return; 
     }
 
+    //this is called when the object is being dragged
     public void OnDrag(PointerEventData eventData)
     {
         rt.anchoredPosition += eventData.delta; //move the position of the dragging object with the same amount the mouse moved in all directions.
     }
 
+    //this is called then the object is being released
     public void OnEndDrag(PointerEventData eventData)
     {
         //Debug.Log("snapping");
@@ -47,18 +57,21 @@ public class draggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDra
         //seek the closest snappable Gameobject.
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("snappable"))
         {
-            snappingComponent = (item.GetComponent("snappable") as snappable);
-            if (snappingTo == null && snappingComponent.free)
-            {
-                if(notYetReceivedKey || key == snappingComponent.key){ snappingTo = item; } 
-            }
-            // if this is the first item in the list, this will trigger and make sure it is not null
+            snappingComponent = (item.GetComponent("snappable") as snappable); 
 
-            else if (getDistance(item) < getDistance(snappingTo)&& snappingComponent.free) //checks if the item of the list is closer to the snappingTo, and sets the closer one.
+            // if this is the first item in the list, this will trigger and make sure it is not null
+            if (snappingTo == null && snappingComponent.free) 
+            {
+                if(notYetReceivedKey || key == snappingComponent.key){ snappingTo = item; } //checks if the keys are the same
+            }
+
+            //checks if the item of the list is closer to the snappingTo, and sets the closer one.
+            else if (getDistance(item) < getDistance(snappingTo)&& snappingComponent.free) 
             {
                 if (notYetReceivedKey || key == snappingComponent.key) { snappingTo = item; } //make sure that the key is the same as the slot, so you cant crossover moves
             }
         }
+
         //snap to the closest snappable GameObject, and send it a message that it is occupied.
         if (notYetReceivedKey)
         {

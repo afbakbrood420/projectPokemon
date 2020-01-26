@@ -18,41 +18,41 @@ public class listManager : MonoBehaviour
 
     private void Start()
     {
+        //makes sure the list is clear and ready to go
         foreach (GameObject item in listElements)
         {
             Destroy(item);
         }
         listElements.Clear();
+
+        //get the chosen pokemons out of the party
         party = GameObject.FindGameObjectWithTag("party");
         partyPokemons = (party.GetComponent("party") as party).pokemons;
         count = 0;
+        
+        //makes a prefab for each of the chosen pokemon in the party and put it in a list
         foreach (Pokemon partyPokemon in partyPokemons)
         {
             elementtoBuild = Instantiate(listElementPrefab, transform);
-            (elementtoBuild.GetComponent("listElement") as listElement).setText(partyPokemon.name, count);
+            (elementtoBuild.GetComponent("listElement") as listElement).setText(partyPokemon.name, count); //makes sure that it knows what it represents
             listElements.Add(elementtoBuild);
             count += 1;
         }
         
     }
+    //this is connected to the buttons of the listElements
     public void changeSelectedPokemon(int newIndex)
     {
         currentIndex =  newIndex;
-        //Debug.Log("choosing: " + currentIndex.ToString());
-        foreach (GameObject listElement in listElements)
+        foreach (GameObject listElement in listElements) //deselect all the other elements
         {
             listElement.SendMessage("deselect");
         }
-        //Debug.Log("listElements = ");
+        
+        //select the right one
         listElements[currentIndex].SendMessage("select");
         Debug.Log(currentIndex.ToString());
-        moveListSR.verticalNormalizedPosition = (float)currentIndex / 5f;
+        moveListSR.verticalNormalizedPosition = (float)currentIndex / 5f; //move the list to the pokemon
         Debug.Log(moveListSR.verticalNormalizedPosition);
     }
-    /*
-    void taskOnClick()
-    {
-        moveListSR.verticalNormalizedPosition = 1 / 6;
-    }
-    */
 }

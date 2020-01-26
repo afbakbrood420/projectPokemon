@@ -9,14 +9,9 @@ public class snappable : MonoBehaviour
     public GameObject draggableMove;
     public int key; //key for protecting this slot against other pokemon moves. 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (gameObject.tag != "snappable")
-        {
-            Destroy(this); //if something went wrong in the editor, just in case.
-        }
-    }
+    /*
+     * this class manages a slot for the move, it deals with key management, showing it as free or occupied, and it can make a move inside this slot.
+    */
 
     void onSnap(GameObject newDraggable) //this function is called by the draggable object
     {
@@ -28,10 +23,11 @@ public class snappable : MonoBehaviour
         free = true;
         objectInSlot = null;
     }
-    void occupyWith(move Move) // this is to make the movelist, which you can choose moves from.
+    void occupyWith(move Move) // this makes the move inside this slot
     {
         Instantiate(draggableMove , transform).SendMessage("setMove", Move);
     }
+    //is called by the keymanager and makes sure the key is ready
     void addKey(int newKey)
     {
         key = newKey;
