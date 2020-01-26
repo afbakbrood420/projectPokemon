@@ -33,7 +33,6 @@ public class PokemonSelector : MonoBehaviour
             pokemonNames.Add(pokemon.name); //get a list of all the pokemon names for the dropdown menu
         }
         selector.AddOptions(pokemonNames); //add the list to the dropdown menu
-        searchfield.SendMessage("setPrePokemon", pokemonNames);
         onSelectChange();
     }
 }

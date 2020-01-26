@@ -1601,7 +1601,18 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 949081578046196917}
+        m_MethodName: FilterDropdown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -1621,6 +1632,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456f5abfe3e324644b879753b7c106c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdownScroll: {fileID: 0}
-  dropdown: {fileID: 0}
-  input: {fileID: 9162066513844675346}
+  inputField: {fileID: 9162066513844675346}
+  dropdown: {fileID: 3909804511738479007}
