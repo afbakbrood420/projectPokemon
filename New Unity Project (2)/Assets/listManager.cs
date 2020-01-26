@@ -52,7 +52,7 @@ public class listManager : MonoBehaviour
         //select the right one
         listElements[currentIndex].SendMessage("select");
         Debug.Log(currentIndex.ToString());
-        moveListSR.verticalNormalizedPosition = (float)currentIndex / 5f; //move the list to the pokemon
+        moveListSR.verticalNormalizedPosition = 1f - ((float)currentIndex / 6f); //move the list to the pokemon
         Debug.Log(moveListSR.verticalNormalizedPosition);
     }
 }
