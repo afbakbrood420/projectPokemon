@@ -31,6 +31,7 @@ public class snappable : MonoBehaviour
     void addKey(int newKey)
     {
         key = newKey;
+        
     }
     
 }

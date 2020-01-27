@@ -9,6 +9,8 @@ public class party : MonoBehaviour
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public List<int> HPs = new List<int> { };
     public List<List<move>> moveSets = new List<List<move>> { };
+    public List<Item> items = new List<Item> { };
+    public List<int> itemAmounts = new List<int> { };
     // Start is called before the first frame update
     void Start()
     {
@@ -28,5 +30,4 @@ public class party : MonoBehaviour
     {
         moveSets = newMoves;
     }
-    
 }
