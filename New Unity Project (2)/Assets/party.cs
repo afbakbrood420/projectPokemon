@@ -11,10 +11,14 @@ public class party : MonoBehaviour
     public List<List<move>> moveSets = new List<List<move>> { };
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
+    public bool isTestParty;
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (isTestParty == false)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
     void IchooseThese(List<Pokemon> newParty)
     {

@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MoveSelector.unity
     guid: f372defb09da80d499899e8c170c0edb
   - enabled: 1
-    path: Assets/Scenes/map.unity
+    path: Assets/Scenes/inventory.unity
     guid: 082831cd6732a024b9f839d772ad5f19
   - enabled: 1
-    path: Assets/Scenes/inventory.unity
+    path: Assets/Scenes/map.unity
     guid: a8d1d5501ec11514a996b5921b545041
   - enabled: 1
     path: Assets/Scenes/battle.unity
