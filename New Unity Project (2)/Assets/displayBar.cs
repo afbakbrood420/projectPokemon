@@ -1,21 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class displayBar : MonoBehaviour
 {
     [SerializeField]
-    private RectTransform stretchingRt;
+    private Slider stretchingRt;
 
-    private RectTransform rt;
+    
     public float value = 0.75f; //must be between 0 and 1
-    private void Start()
-    {
-        rt = gameObject.GetComponent<RectTransform>();
 
-    }
     private void Update()
     {
-        stretchingRt.right = rt.right * value;
+        value = value + 0.02f;
+        if (value > 1)
+        {
+            value = 0f;
+        }
+        stretchingRt.value = value;
     }
 }
