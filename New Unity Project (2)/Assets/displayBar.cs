@@ -13,11 +13,6 @@ public class displayBar : MonoBehaviour
 
     private void Update()
     {
-        value = value + 0.02f;
-        if (value > 1)
-        {
-            value = 0f;
-        }
         stretchingRt.value = value;
     }
 }
