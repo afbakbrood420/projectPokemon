@@ -21,10 +21,10 @@ public class targetFinder : MonoBehaviour
     }
     public void visibility(bool visible)
     {
-        Debug.Log("bravo 6 going dark");
         img.enabled = visible;
         txt.enabled = visible;
         hpBar.enabled = visible;
+        hpBar.visibility(visible);
 
     }
 }

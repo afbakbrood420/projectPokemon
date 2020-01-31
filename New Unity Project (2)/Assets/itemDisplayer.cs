@@ -23,6 +23,7 @@ public class itemDisplayer : MonoBehaviour
     }
     void findTarget()
     {
-        
+        Debug.Log("using: " + item.name);
+        GameObject.FindObjectOfType<targetFinderBuilder>().GetComponent<targetFinderBuilder>().show();
     }
 }

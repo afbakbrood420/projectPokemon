@@ -16,14 +16,16 @@ public class showHide : MonoBehaviour
     [SerializeField]
     private targetFinderBuilder TargetFinderBuilder;
 
-    private void Start()
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel")&&hidden == false)
+        {
+            hide();
+        }
+    }
+    public void initiate()
     {
         targetFinders = TargetFinderBuilder.targetFinders;
-        foreach (targetFinder target in targetFinders)
-        {
-            Debug.Log(target.pokemon.name);
-        }
-
         hide();
     }
     public void hide()
@@ -32,12 +34,20 @@ public class showHide : MonoBehaviour
         {
             TargetFinder.visibility(false);
         }
+        foreach (Image img in rest)
+        {
+            img.enabled = false;
+        }
     }
     public void show()
     {
         foreach (targetFinder TargetFinder in targetFinders)
         {
             TargetFinder.visibility(true);
+        }
+        foreach (Image img in rest)
+        {
+            img.enabled = true;
         }
     }
 }

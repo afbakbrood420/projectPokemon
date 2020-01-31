@@ -5,6 +5,9 @@ using UnityEngine;
 public class targetFinderBuilder : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    private showHide ShowHide;
+    
     private party Party;
     public List<targetFinder> targetFinders = new List<targetFinder> { };
     public GameObject targetFinderPrefab;
@@ -18,5 +21,10 @@ public class targetFinderBuilder : MonoBehaviour
             targetFinders[count].setPokemon(pokemon,Party.HPs[count]);
             count = count + 1;
         }
+        ShowHide.initiate();
+    }
+    public void show()
+    {
+        ShowHide.show();
     }
 }
