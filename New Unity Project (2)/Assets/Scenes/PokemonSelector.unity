@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -384,16 +385,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3909804513656549345, guid: a85fbe7b6febc8e449085fdf56d2f173,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.5800171
-      objectReference: {fileID: 0}
-    - target: {fileID: 3909804513656549345, guid: a85fbe7b6febc8e449085fdf56d2f173,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3909804511738479006, guid: a85fbe7b6febc8e449085fdf56d2f173,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -402,6 +393,16 @@ PrefabInstance:
     - target: {fileID: 3909804511738479006, guid: a85fbe7b6febc8e449085fdf56d2f173,
         type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909804513656549345, guid: a85fbe7b6febc8e449085fdf56d2f173,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.5800171
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909804513656549345, guid: a85fbe7b6febc8e449085fdf56d2f173,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1693,6 +1694,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemons: []
   HPs: 
+  items:
+  - {fileID: 11400000, guid: 4c089b603056666419c407b103a08d3e, type: 2}
+  itemAmounts: 0a000000
+  isTestParty: 0
 --- !u!4 &1615372261
 Transform:
   m_ObjectHideFlags: 0

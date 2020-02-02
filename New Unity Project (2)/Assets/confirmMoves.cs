@@ -81,5 +81,6 @@ public class confirmMoves : MonoBehaviour
                 count += 1;
             }
         }
+        GameObject.FindGameObjectWithTag("party").GetComponent<party>().setMoves(movesOfPokemons);
     }
 }

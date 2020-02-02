@@ -724,7 +724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1637367618}
   - component: {fileID: 1637367622}
-  - component: {fileID: 1637367621}
   - component: {fileID: 1637367620}
   - component: {fileID: 1637367619}
   m_Layer: 5
@@ -792,40 +791,12 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 684206329}
   m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 1
   m_HorizontalScrollbarSpacing: 0
   m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1637367621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637367617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.017676119, g: 0.0141509175, b: 1, a: 0.23921569}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1637367622
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -889,8 +860,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 10
-    m_Bottom: 10
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -963,6 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 2989772691430145349, guid: 82e18da5124522647b02cb08f96d9309,
     type: 3}
+  showHide: {fileID: 1261295694}
 --- !u!1 &1943099066
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,7 +947,7 @@ GameObject:
   - component: {fileID: 1943099067}
   m_Layer: 0
   m_Name: Party
-  m_TagString: party
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -987,7 +959,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943099066}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6f80beb3f395f441bb4105ff68ae89e, type: 3}
   m_Name: 
@@ -999,7 +971,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6bc9f5b495f80c54d996b6cfdf02d26f, type: 2}
   - {fileID: 11400000, guid: a5cc09ee4d5b82e4082e6067dfb3b3b1, type: 2}
   - {fileID: 11400000, guid: f4dfcebdfd0ca03479f0aa9c45e7910c, type: 2}
-  HPs: 640000006400000064000000640000006400000064000000
+  HPs: 3c0000003c0000003c0000003c0000003c0000000a000000
   items:
   - {fileID: 11400000, guid: 4c089b603056666419c407b103a08d3e, type: 2}
   itemAmounts: 0a000000
@@ -1299,7 +1271,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0

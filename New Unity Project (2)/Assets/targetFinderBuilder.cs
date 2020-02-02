@@ -11,14 +11,16 @@ public class targetFinderBuilder : MonoBehaviour
     private party Party;
     public List<targetFinder> targetFinders = new List<targetFinder> { };
     public GameObject targetFinderPrefab;
+
     private int count = 0;
+
     void Start()
     {
         Party = (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party);
         foreach (Pokemon pokemon in Party.pokemons)
         {
             targetFinders.Add(Instantiate(targetFinderPrefab,transform).GetComponent("targetFinder") as targetFinder);
-            targetFinders[count].setPokemon(pokemon,Party.HPs[count]);
+            targetFinders[count].setPokemon(pokemon,Party.HPs[count], count);
             count = count + 1;
         }
         ShowHide.initiate();
@@ -26,5 +28,14 @@ public class targetFinderBuilder : MonoBehaviour
     public void show()
     {
         ShowHide.show();
+    }
+    void Update()
+    {
+        count = 0;
+        foreach (targetFinder TargetFinder in targetFinders)
+        {
+            TargetFinder.updateHp(Party.HPs[count]);
+            count = count + 1;
+        }
     }
 }
