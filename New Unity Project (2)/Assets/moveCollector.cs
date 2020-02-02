@@ -14,6 +14,7 @@ public class moveCollector : MonoBehaviour
     public GameObject statDisplayerPrefab;
     public GameObject statDisplayerParent;
     public List<string> stats = new List<string> { };
+    public Pokemon pokemonOfObject;
     
     /*
      * this script is responsible for collecting the moves once the confirm button is pressed and setting the pokemon at the start of the
@@ -22,6 +23,7 @@ public class moveCollector : MonoBehaviour
 
     private move moveToAdd;
     private List<GameObject> statDisplays = new List<GameObject> { };
+    private int count = 0;
 
     public List<move> getMoves()
     {
@@ -44,6 +46,7 @@ public class moveCollector : MonoBehaviour
     //this is called when this object is created
     public void setPokemon(Pokemon pokemon, int newKey)
     {
+        pokemonOfObject = pokemon;
         key = newKey;
         moveAdder.SendMessage("addKey", key); //give the moveAdder the key
         moveAdder.SendMessage("makeMoves", pokemon); //give the move adder the pokemon
@@ -65,5 +68,14 @@ public class moveCollector : MonoBehaviour
             //https://forum.unity.com/threads/access-variable-by-string-name.42487/ the last variable in the send message is from this forum.
         }
         
+    }
+    public void defaultMoves()
+    {
+        count = 0;
+        foreach (GameObject slot in chosenSlotList)
+        {
+            slot.GetComponent<snappable>().occupyWith(pokemonOfObject.moves[count]);
+            count += 1;
+        }
     }
 }

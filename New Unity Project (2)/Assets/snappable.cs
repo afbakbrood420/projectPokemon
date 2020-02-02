@@ -23,7 +23,7 @@ public class snappable : MonoBehaviour
         free = true;
         objectInSlot = null;
     }
-    void occupyWith(move Move) // this makes the move inside this slot
+    public void occupyWith(move Move) // this makes the move inside this slot
     {
         Instantiate(draggableMove , transform).SendMessage("setMove", Move);
     }

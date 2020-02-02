@@ -12,31 +12,41 @@ public class party : MonoBehaviour
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
     public bool isTestParty;
-    // Start is called before the first frame update
+    /*
+     * this script is designed to keep track of variables across scenes. the data in this object can be accessed by all scripts in a scene.
+     * in start we make sure that this object is immortal, which means that it is not scene bound.
+     * this script also acts as a scene manager, this is in charge of loading new scenes.
+     */
+
+
     void Start()
     {
         if (isTestParty == false)
         {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); //makes sure that this object is immortal
         }
     }
+    //this is called by an object in the pokemonselector screen once all the pokemons are chosen
     void IchooseThese(List<Pokemon> newParty)
     {
         pokemons.Clear();
         foreach (Pokemon newPokemon in newParty)
         {
-            pokemons.Add(newPokemon);
+            pokemons.Add(newPokemon); 
             HPs.Add(newPokemon.HP);
         }
 
         SceneManager.LoadScene(1);
     }
+
+    //this is called by an object in the moveselector screen once all the moves are chosen.
     public void setMoves(List<List<move>> newMoves)
     {
         moveSets = newMoves;
         SceneManager.LoadScene("Scenes/map");
     }
 
+    //this is called once an item is used in the inventory scene
     public void applyItem(Item item, int index)
     {
         HPs[index] = HPs[index] + item.healing;
@@ -50,13 +60,18 @@ public class party : MonoBehaviour
             items.Remove(item);
         }
     }
+
+    //for exiting the inventory
     public void exitInventory()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Scenes/map");
     }
+
+    //for accesing the inventory
     public void accesInventory()
     {
-        SceneManager.LoadScene(3);
+        Debug.Log("transitioning...");
+        SceneManager.LoadScene("Scenes/inventory");
     }
     
 }
