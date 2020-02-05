@@ -5,7 +5,8 @@ using UnityEngine;
 public class allPokemonDb : MonoBehaviour
 {
     public List<Pokemon> pokemons = new List<Pokemon> { };
-
+    public List<Pokemon> pokemontwo = new List<Pokemon> { };
+        
     /*
      this script makes sure that the pokemonselectors have the right lists of pokemon.
      the pokemons list has been assigned in the editor

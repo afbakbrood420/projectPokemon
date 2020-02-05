@@ -1107,6 +1107,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 76847d4ebd452a849aceaa1de82ee145, type: 2}
   - {fileID: 11400000, guid: 704b60fa3319dd24194a6b7eded7db23, type: 2}
   - {fileID: 11400000, guid: 8d8f596c660558e4f838d1abc9fe327f, type: 2}
+  pokemontwo:
+  - {fileID: 11400000, guid: 9329477359822a54c91aba0f9dbadcd9, type: 2}
 --- !u!1001 &993119027
 PrefabInstance:
   m_ObjectHideFlags: 0
