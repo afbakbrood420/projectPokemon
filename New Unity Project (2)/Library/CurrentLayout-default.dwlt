@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 709, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 15917
+  controlID: 38
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 433, y: 492}
   m_MaxSize: {x: 14003, y: 14042}
   vertical: 1
-  controlID: 15860
+  controlID: 129
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 15836
+  controlID: 130
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -211,8 +211,8 @@ MonoBehaviour:
     y: 0
     width: 1184
     height: 543
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_MinSize: {x: 433, y: 271}
   m_MaxSize: {x: 14003, y: 10021}
   vertical: 0
-  controlID: 15861
+  controlID: 45
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -441,9 +441,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 383f0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 9edaffffe8daffff30dbffff22e1ffff36eeffffb4faffffd8faffffeefaffff72fbffff84350000
+      m_ExpandedIDs: 72fbffffdc3300000234000012340000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: -2.316512, y: -0.58076704, z: -21.410057}
     speed: 2
-    m_Value: {x: -2.53978, y: -0.47928172, z: -21.364876}
+    m_Value: {x: -2.316512, y: -0.58076704, z: -21.410057}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 11.990358
     speed: 2
-    m_Value: 12.555349
+    m_Value: 11.990358
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -647,11 +647,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Images&sprites/BattleScene
+    - Assets/scriptableObjects
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Images&sprites/BattleScene
+  - Assets/scriptableObjects
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Boris\Documents\GitHub\projectPokemon\New Unity Project
     (2)
@@ -659,9 +659,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 403e0000
-    m_LastClickedID: 15936
-    m_ExpandedIDs: 00000000e8330000ea330000ec330000ee330000
+    m_SelectedIDs: 78340000
+    m_LastClickedID: 13432
+    m_ExpandedIDs: 0000000072340000743400007634000078340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -689,7 +689,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e8330000ea330000ec330000ee330000
+    m_ExpandedIDs: 0000000072340000743400007634000078340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
