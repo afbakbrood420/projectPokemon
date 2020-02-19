@@ -9,23 +9,33 @@ using UnityEngine.UI;
 
 public class Battle_Script : MonoBehaviour
 {
-    public Image OurpokUI;
-    public Image EnemypokUI;
+
+
+    [Header("Sprites")]
     public Image Ourpoksprite;
     public Image Enemypoksprite;
 
+    [Header("voor later")]
     public displayBar dbOurpok;
     public displayBar dbEnemypok;
     public Text Eventtekst;
-    public Button button;
+    
+    [Header("FBPR")]
+    public Button FightButton;
+    public Button BagButton;
+    public Button PokemonButton;
+    public Button RunButton;
 
-    //pokemon level
-    public Text LVourpok;
-    public Text LVEnemypok;
+    [Header("Moves")]
+    public Button Move1;
+    public Button Move2;
+    public Button Move3;
+    public Button Move4;
+
+    [Header("pokname")]
     public Text Ourpokname;
     public Text Enemypokname;
 
-    //public Button Moves;//
 
 
     // public rekemachine;
