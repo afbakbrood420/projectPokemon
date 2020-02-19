@@ -1775,12 +1775,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OurpokUI: {fileID: 0}
   EnemypokUI: {fileID: 0}
-  button: {fileID: 0}
+  Ourpoksprite: {fileID: 0}
+  Enemypoksprite: {fileID: 0}
   dbOurpok: {fileID: 0}
   dbEnemypok: {fileID: 0}
   Eventtekst: {fileID: 0}
-  Ourpok: {fileID: 0}
-  Enemypok: {fileID: 0}
+  button: {fileID: 0}
+  LVourpok: {fileID: 0}
+  LVEnemypok: {fileID: 0}
+  Ourpokname: {fileID: 0}
+  Enemypokname: {fileID: 0}
 --- !u!4 &1865089856
 Transform:
   m_ObjectHideFlags: 0
@@ -1789,7 +1793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865089854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0349603, y: 0.39537254, z: -269.11758}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
