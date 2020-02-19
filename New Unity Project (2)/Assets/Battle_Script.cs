@@ -36,6 +36,14 @@ public class Battle_Script : MonoBehaviour
     public Text Ourpokname;
     public Text Enemypokname;
 
+    // pp toevoegen
+    [Header("PP + type")]
+    public Text PP;
+    public Text Type;
+
+
+    
+
 
 
     // public rekemachine;
