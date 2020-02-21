@@ -18,7 +18,6 @@ public class Battle_Script : MonoBehaviour
     [Header("voor later")]
     public displayBar dbOurpok;
     public displayBar dbEnemypok;
-    public Text Eventtekst;
 
     [Header("FBPR")]
     public Button FightButton;
@@ -31,16 +30,20 @@ public class Battle_Script : MonoBehaviour
     public Button Move2;
     public Button Move3;
     public Button Move4;
+    public Button backbutton;
+    public Text move1;
+    public Text move2;
+    public Text move3;
+    public Text move4;
+
 
     [Header("pokname")]
     public Text Ourpokname;
     public Text Enemypokname;
 
     // pp toevoegen
-    [Header("PP + type")]
-    public Text PP;
-    public Text Type;
-
+    [Header("misc")]
+    public Text Eventtekst;
     public party pokemonparty;
 
 
@@ -52,25 +55,31 @@ public class Battle_Script : MonoBehaviour
 
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
-
+    private Pokemon ourpok;
+    private Pokemon enemypok;
+    
 
     void Start()
     {
         //toevoegen van de pokemonparty
         pokemonparty = (GameObject.FindWithTag("party").GetComponent<party>() as party);
 
-        // aanroepen van player spirte
-        Ourpoksprite.sprite = pokemonparty.pokemons[0].sprite;
-
-        //aamroepen van enemysprite
-        Enemypoksprite.sprite = pokemonparty.trainer.pokemons[0].sprite;
-
-        //Ourpokname house in the middle of our house in the middle of our hosue in the middle of ouhrse ouin dht emidel or four house in th emiddle of lour house in th midlle ouf hioeus on i t hemipi ldle ohunse. 
         // als of fight, dan fight - hide en long moves - show.
 
-
+        //fightbutton - als je klikt gaat figntbuttonfunction aan.
         FightButton.onClick.AddListener(Fightbuttonfunction);
+        //longmoves (panel) staat uit. 
         longmoves.changeVisibility(false);
+        //backbutton - als je klikt gaat backbutotnfunction aan.
+        backbutton.onClick.AddListener(Backbuttonfunction);
+
+        ourpok = pokemonparty.pokemons[0];
+        enemypok = pokemonparty.trainer.pokemons[0];
+
+        //aanroepen van updateUI
+        updateUI();
+        
+
 
 
     }
@@ -82,8 +91,34 @@ public class Battle_Script : MonoBehaviour
 
     }
 
-    void Update()
+    void Backbuttonfunction()
     {
-        
+        longmoves.changeVisibility(false);
+        fbpr.changeVisibility(true);
+
+
+
+    }
+
+    void updateUI()
+    {
+        // aanroepen van player spirte
+        Ourpoksprite.sprite = ourpok.sprite;
+
+         //aamroepen van enemysprite
+        Enemypoksprite.sprite = enemypok.sprite;
+
+        //pokemonnamen toevoegen
+        Ourpokname.text = ourpok.name;
+        Enemypokname.text = enemypok.name; 
+
+        //veranderen 'move #' naar *movenaam*
+        move1.text = ourpok.moves[0].name;
+        move2.text = ourpok.moves[1].name;
+        move3.text = ourpok.moves[2].name;
+        move4.text = ourpok.moves[3].name;
+
+        Eventtekst.text = "What will " + ourpok.name + " do?";
+
     }
 }
