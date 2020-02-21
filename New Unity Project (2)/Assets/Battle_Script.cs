@@ -19,7 +19,7 @@ public class Battle_Script : MonoBehaviour
     public displayBar dbOurpok;
     public displayBar dbEnemypok;
     public Text Eventtekst;
-    
+
     [Header("FBPR")]
     public Button FightButton;
     public Button BagButton;
@@ -41,9 +41,7 @@ public class Battle_Script : MonoBehaviour
     public Text PP;
     public Text Type;
 
-
-    
-
+    public party pokemonparty;
 
 
     // public rekemachine;
@@ -52,12 +50,38 @@ public class Battle_Script : MonoBehaviour
     // speed ourpok == speed enemypok; then random int
 
 
+    public battlesceneHider longmoves;
+    public battlesceneHider fbpr;
+
+
     void Start()
     {
-        
+        //toevoegen van de pokemonparty
+        pokemonparty = (GameObject.FindWithTag("party").GetComponent<party>() as party);
+
+        // aanroepen van player spirte
+        Ourpoksprite.sprite = pokemonparty.pokemons[0].sprite;
+
+        //aamroepen van enemysprite
+        Enemypoksprite.sprite = pokemonparty.trainer.pokemons[0].sprite;
+
+        //Ourpokname house in the middle of our house in the middle of our hosue in the middle of ouhrse ouin dht emidel or four house in th emiddle of lour house in th midlle ouf hioeus on i t hemipi ldle ohunse. 
+        // als of fight, dan fight - hide en long moves - show.
+
+
+        FightButton.onClick.AddListener(Fightbuttonfunction);
+        longmoves.changeVisibility(false);
+
+
     }
 
- 
+    void Fightbuttonfunction()
+    {
+        longmoves.changeVisibility(true);
+        fbpr.changeVisibility(false);
+
+    }
+
     void Update()
     {
         

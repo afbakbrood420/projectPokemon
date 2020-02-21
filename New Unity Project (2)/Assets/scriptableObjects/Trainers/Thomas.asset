@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ab8617aca373b4cb504bfb28ab6123, type: 3}
+  m_Name: Thomas
+  m_EditorClassIdentifier: 
+  pokemons:
+  - {fileID: 11400000, guid: 670dcde4c4104834eb32a194559a1a7b, type: 2}
+  - {fileID: 11400000, guid: 7a05a19b3ae77ea459d343cbd7915224, type: 2}
+  - {fileID: 11400000, guid: edbac5ad873b530459ceb82783996aa7, type: 2}
+  - {fileID: 11400000, guid: 649f58cdb4b4a33468f88b9218873313, type: 2}
+  - {fileID: 11400000, guid: ad9570789ec43a849b104a2a9e58aacc, type: 2}
+  - {fileID: 11400000, guid: f2231d7e2ac09db4983fe0757d2ea02d, type: 2}
+  name: Thomas

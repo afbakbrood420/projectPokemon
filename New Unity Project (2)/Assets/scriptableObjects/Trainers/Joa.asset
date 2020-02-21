@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ab8617aca373b4cb504bfb28ab6123, type: 3}
+  m_Name: Joa
+  m_EditorClassIdentifier: 
+  pokemons:
+  - {fileID: 11400000, guid: 19e660a2ad1047d4fb0c0f891fca6049, type: 2}
+  - {fileID: 11400000, guid: 4871c3d0f9814004eb731591aa40b250, type: 2}
+  - {fileID: 11400000, guid: 624e3ce9070033f40975c51ffb333576, type: 2}
+  - {fileID: 11400000, guid: ca70ada465778f24494c6279a52e0a7f, type: 2}
+  - {fileID: 11400000, guid: f3ed2cce019317b448bfb736dca9d812, type: 2}
+  - {fileID: 11400000, guid: a5cc09ee4d5b82e4082e6067dfb3b3b1, type: 2}
+  name: Joa

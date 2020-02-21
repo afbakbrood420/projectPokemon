@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class party : MonoBehaviour
 {
+    public Trainer trainer;
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public List<int> HPs = new List<int> { };
     public List<List<move>> moveSets = new List<List<move>> { };
