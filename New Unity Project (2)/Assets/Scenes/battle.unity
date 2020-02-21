@@ -3686,6 +3686,7 @@ MonoBehaviour:
   move4: {fileID: 730313605}
   Ourpokname: {fileID: 108233204}
   Enemypokname: {fileID: 1019798675}
+  Oupokhp: {fileID: 87597756}
   Eventtekst: {fileID: 1719597022}
   pokemonparty: {fileID: 0}
   longmoves: {fileID: 1060868614}

@@ -37,9 +37,12 @@ public class Battle_Script : MonoBehaviour
     public Text move4;
 
 
-    [Header("pokname")]
+    [Header("pokUI")]
     public Text Ourpokname;
     public Text Enemypokname;
+    public Text Oupokhp;
+
+
 
     // pp toevoegen
     [Header("misc")]
@@ -73,6 +76,7 @@ public class Battle_Script : MonoBehaviour
         //backbutton - als je klikt gaat backbutotnfunction aan.
         backbutton.onClick.AddListener(Backbuttonfunction);
 
+        //de pokemon = de bovenste pokemon
         ourpok = pokemonparty.pokemons[0];
         enemypok = pokemonparty.trainer.pokemons[0];
 
@@ -119,11 +123,12 @@ public class Battle_Script : MonoBehaviour
         move4.text = ourpok.moves[3].name;
 
         Eventtekst.text = "What will " + ourpok.name + " do?";
-        
 
+        // ourpok hp
+        Oupokhp.text = ourpok.HP.ToString();
+       
 
-
-    }
+}
 
     IEnumerator Startbattleround(move attackOur, move attackEnemy)
     {
