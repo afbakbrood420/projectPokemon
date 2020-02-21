@@ -119,6 +119,40 @@ public class Battle_Script : MonoBehaviour
         move4.text = ourpok.moves[3].name;
 
         Eventtekst.text = "What will " + ourpok.name + " do?";
+        
+
+
+
+    }
+
+    IEnumerator Startbattleround(move attackOur, move attackEnemy)
+    {
+        longmoves.changeVisibility(false);
+        fbpr.changeVisibility(false);
+
+        yield return new WaitForSeconds(1);
+        //move 1
+        yield return new WaitForSeconds(1);
+        //move 2
+        yield return new WaitForSeconds(1);
+        //battleselection
+
+
+        //eventtekst
+        //hit. wacht 1 tel, 2e hit
+
 
     }
 }
+
+
+
+
+// eventtekst - pok used move 1
+// berekening - hp / displaybar
+//eventtekst, effectiveness
+// eventtekst - pok used move 2
+// berekening - hp / displaybar
+//eventtekst, effectiveness
+//reset
+
