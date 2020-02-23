@@ -16,7 +16,7 @@ public class allPokemonDb : MonoBehaviour
     {
         foreach (Transform selector in gameObject.GetComponentInChildren<Transform>())
         {
-            selector.gameObject.SendMessage("setPrePokemon", pokemons);
+            selector.gameObject.SendMessage("setPrePokemon", pokemontwo);
         }
     }
     

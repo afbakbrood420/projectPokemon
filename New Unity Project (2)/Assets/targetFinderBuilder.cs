@@ -5,8 +5,7 @@ using UnityEngine;
 public class targetFinderBuilder : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]
-    private showHide ShowHide;
+    public showHide ShowHide;
     
     private party Party;
     public List<targetFinder> targetFinders = new List<targetFinder> { };

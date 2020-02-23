@@ -13,18 +13,41 @@ public class party : MonoBehaviour
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
     public bool isTestParty;
+    public bool inBattle = false;
+
+    [Header("not to be assigned in the editor")]
+    public int firsPokemonIndex;
+    public int currentPokemonIndex;
+    public int enemyPokemonIndex;
+    public List<int> EnemyHps;
+    public List<Trainer> trainersDefeated;
     /*
      * this script is designed to keep track of variables across scenes. the data in this object can be accessed by all scripts in a scene.
      * in start we make sure that this object is immortal, which means that it is not scene bound.
      * this script also acts as a scene manager, this is in charge of loading new scenes.
      */
 
+    private Battle_Script battle_Script;
+    private List<move> moveSetToAdd = new List<move> { };
 
     void Start()
     {
         if (isTestParty == false)
         {
             DontDestroyOnLoad(gameObject); //makes sure that this object is immortal
+        }
+        else
+        {
+            //make test movesets by just taking the first 4
+            foreach (Pokemon pokemon in pokemons)
+            {
+                moveSetToAdd = new List<move> { };
+                for (int i = 0; i < 4; i++)
+                {
+                    moveSetToAdd.Add(pokemon.moves[i]);
+                }
+                moveSets.Add(moveSetToAdd);
+            }
         }
     }
     //this is called by an object in the pokemonselector screen once all the pokemons are chosen
@@ -33,7 +56,7 @@ public class party : MonoBehaviour
         pokemons.Clear();
         foreach (Pokemon newPokemon in newParty)
         {
-            pokemons.Add(newPokemon); 
+            pokemons.Add(newPokemon);
             HPs.Add(newPokemon.HP);
         }
 
@@ -51,7 +74,7 @@ public class party : MonoBehaviour
     public void applyItem(Item item, int index)
     {
         HPs[index] = HPs[index] + item.healing;
-        if (HPs[index]>pokemons[index].HP)
+        if (HPs[index] > pokemons[index].HP)
         {
             HPs[index] = pokemons[index].HP;
         }
@@ -65,14 +88,46 @@ public class party : MonoBehaviour
     //for exiting the inventory
     public void exitInventory()
     {
-        SceneManager.LoadScene("Scenes/map");
+        if (inBattle)
+        {
+            SceneManager.LoadScene("Scenes/battle");
+        }
+        else
+        {
+            SceneManager.LoadScene("Scenes/map");
+        }
     }
 
     //for accesing the inventory
     public void accesInventory()
     {
-        Debug.Log("transitioning...");
+        if (inBattle)
+        {
+            battle_Script = FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>();
+            //get the index of the pokemon now in battle
+            currentPokemonIndex = pokemons.IndexOf(battle_Script.ourpok);
+
+            //get the index of the enemies pokemon now in battle
+            enemyPokemonIndex = pokemons.IndexOf(battle_Script.enemypok);
+
+            //store the hps of the enemy
+            EnemyHps = battle_Script.enemyHps;
+        }
+        else
+        {
+
+        }
         SceneManager.LoadScene("Scenes/inventory");
     }
-    
+    public void startFight(Trainer newTrainer)
+    {
+        trainer = newTrainer;
+        SceneManager.LoadScene("Scenes/battle");
+    }
+    public void endBattle()
+    {
+        SceneManager.LoadScene("Scenes/map");
+    }
+
+
 }

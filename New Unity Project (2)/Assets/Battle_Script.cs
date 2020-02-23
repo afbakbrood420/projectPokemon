@@ -26,10 +26,10 @@ public class Battle_Script : MonoBehaviour
     public Button RunButton;
 
     [Header("Moves")]
-    public Button Move1;
-    public Button Move2;
-    public Button Move3;
-    public Button Move4;
+    public Button move0b;
+    public Button move1b;
+    public Button move2b;
+    public Button move3b;
     public Button backbutton;
     public Text move1;
     public Text move2;
@@ -40,7 +40,8 @@ public class Battle_Script : MonoBehaviour
     [Header("pokUI")]
     public Text Ourpokname;
     public Text Enemypokname;
-    public Text Oupokhp;
+    public Text OurPokMaxHp;
+    public Text ourPokHp;
 
 
 
@@ -58,9 +59,13 @@ public class Battle_Script : MonoBehaviour
 
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
-    private Pokemon ourpok;
-    private Pokemon enemypok;
-    
+
+    [Header("not for editor")]
+    public Pokemon ourpok;
+    public int ourpokIndex;
+    public Pokemon enemypok;
+    public int enemyPokIndex;
+    public List<int> enemyHps = new List<int> { };
 
     void Start()
     {
@@ -74,17 +79,43 @@ public class Battle_Script : MonoBehaviour
         //longmoves (panel) staat uit. 
         longmoves.changeVisibility(false);
         //backbutton - als je klikt gaat backbutotnfunction aan.
+
         backbutton.onClick.AddListener(Backbuttonfunction);
+        BagButton.onClick.AddListener(bag);
+        initiateMoveButtons();
+
+
+
+
+        if (pokemonparty.inBattle)
+        {
+            //resuming the battle
+            enemyHps = pokemonparty.EnemyHps;
+            enemyPokIndex = pokemonparty.enemyPokemonIndex;
+            enemypok = pokemonparty.trainer.pokemons[enemyPokIndex];
+
+
+            ourpokIndex = pokemonparty.currentPokemonIndex;
+            ourpok = pokemonparty.pokemons[ourpokIndex];
+        }
+        else
+        {
+            //making a new battle
+            ourpok = pokemonparty.pokemons[0];
+            ourpokIndex = 0;
+            enemypok = pokemonparty.trainer.pokemons[0];
+            enemyPokIndex = 0;
+
+            foreach (Pokemon pokemon in pokemonparty.trainer.pokemons)
+            {
+                enemyHps.Add(pokemon.HP);
+            }
+        }
 
         //de pokemon = de bovenste pokemon
-        ourpok = pokemonparty.pokemons[0];
-        enemypok = pokemonparty.trainer.pokemons[0];
 
         //aanroepen van updateUI
         updateUI();
-        
-
-
 
     }
 
@@ -92,16 +123,12 @@ public class Battle_Script : MonoBehaviour
     {
         longmoves.changeVisibility(true);
         fbpr.changeVisibility(false);
-
     }
 
     void Backbuttonfunction()
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(true);
-
-
-
     }
 
     void updateUI()
@@ -109,12 +136,12 @@ public class Battle_Script : MonoBehaviour
         // aanroepen van player spirte
         Ourpoksprite.sprite = ourpok.sprite;
 
-         //aamroepen van enemysprite
+        //aamroepen van enemysprite
         Enemypoksprite.sprite = enemypok.sprite;
 
         //pokemonnamen toevoegen
         Ourpokname.text = ourpok.name;
-        Enemypokname.text = enemypok.name; 
+        Enemypokname.text = enemypok.name;
 
         //veranderen 'move #' naar *movenaam*
         move1.text = ourpok.moves[0].name;
@@ -125,17 +152,22 @@ public class Battle_Script : MonoBehaviour
         Eventtekst.text = "What will " + ourpok.name + " do?";
 
         // ourpok hp
-        Oupokhp.text = ourpok.HP.ToString();
-       
+        OurPokMaxHp.text = ourpok.HP.ToString();
+        ourPokHp.text = pokemonparty.HPs[ourpokIndex].ToString();
+        dbOurpok.value = (float)pokemonparty.HPs[ourpokIndex] / (float)ourpok.HP;
+        dbEnemypok.value = (float)enemyHps[enemyPokIndex] / (float)enemypok.HP;
 
-}
+    }
 
+    //coroutines duren langer dan 1 frame dit is een coroutine
     IEnumerator Startbattleround(move attackOur, move attackEnemy)
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(false);
+        Debug.Log("enemyPok used: " + attackEnemy.name);
+        Debug.Log("ourPok used: " + attackOur.name);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
         yield return new WaitForSeconds(1);
         //move 2
@@ -144,9 +176,37 @@ public class Battle_Script : MonoBehaviour
 
 
         //eventtekst
-        //hit. wacht 1 tel, 2e hit
+        //hit. wacht 1 tel, 2e move
+        longmoves.changeVisibility(true);
+        fbpr.changeVisibility(true);
+    }
 
+    void bag()
+    {
+        pokemonparty.accesInventory();
+    }
+    void endBattle()
+    {
+        pokemonparty.inBattle = false;
+        pokemonparty.trainersDefeated.Add(pokemonparty.trainer);
+        pokemonparty.endBattle();
+    }
+    void initiateMoveButtons() 
+    {
+        move0b.onClick.AddListener(() => chooseMove(0));
+        move1b.onClick.AddListener(() => chooseMove(1));
+        move2b.onClick.AddListener(() => chooseMove(2));
+        move3b.onClick.AddListener(() => chooseMove(3));
+    }
 
+    void chooseMove(int moveIndex)
+    {
+        foreach (move item in pokemonparty.moveSets[ourpokIndex])
+        {
+            Debug.Log(item);
+        }
+        Debug.Log(pokemonparty.moveSets[ourpokIndex]);
+        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex] , enemypok.moves[0]));
     }
 }
 

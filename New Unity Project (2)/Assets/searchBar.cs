@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class searchBar : MonoBehaviour
 {
-    [SerializeField]
-    private InputField inputField;
+    
+    public InputField inputField;
 
-    [SerializeField]
-    private Dropdown dropdown;
+    
+    public Dropdown dropdown;
 
     private List<Dropdown.OptionData> dropdownOptions;
 

@@ -10,11 +10,10 @@ public class showHide : MonoBehaviour
 
     private List<targetFinder> targetFinders = new List<targetFinder> { };
 
-    [SerializeField]
-    private List<Image> rest = new List<Image> { };
+    
+    public List<Image> rest = new List<Image> { };
 
-    [SerializeField]
-    private targetFinderBuilder TargetFinderBuilder;
+    public targetFinderBuilder TargetFinderBuilder;
 
     private void Update()
     {
