@@ -23,6 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3570213ee67bd674ebd97edde2b1dd87, type: 2}
   - {fileID: 11400000, guid: 95d402d84e6926343988b3e6981fa9fa, type: 2}
   - {fileID: 11400000, guid: c2aa5bcd61227764d906cc15fd90528a, type: 2}
+  - {fileID: 11400000, guid: b3cd2baf6fb6c404c8d1c809f66c0299, type: 2}
+  - {fileID: 11400000, guid: da477412e31dc0744a3d6247a91350a6, type: 2}
   pokedexEntry: charizard a beast
   sprite: {fileID: 21300000, guid: e19134bf25665734bbf3c35ca02310f3, type: 3}
   shinySprite: {fileID: 21300000, guid: 6e79c83ae03e8bb4caa2474c48410fbd, type: 3}

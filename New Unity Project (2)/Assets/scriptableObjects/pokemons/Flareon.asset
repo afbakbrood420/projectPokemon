@@ -18,7 +18,13 @@ MonoBehaviour:
   SpAttack: 95
   SpDefense: 110
   Speed: 65
-  moves: []
+  moves:
+  - {fileID: 11400000, guid: 3570213ee67bd674ebd97edde2b1dd87, type: 2}
+  - {fileID: 11400000, guid: f252d30cb6cfad342845936e76431b76, type: 2}
+  - {fileID: 11400000, guid: 80eb40f59447af7479c10767100acd78, type: 2}
+  - {fileID: 11400000, guid: 87f6f7e2cc5ab8847b73a129facede78, type: 2}
+  - {fileID: 11400000, guid: 0611e1c497f0d9c4198db6f48db8acd6, type: 2}
+  - {fileID: 11400000, guid: 80fe7bb4317523a4c95b05366f8e34ee, type: 2}
   pokedexEntry: charizard a beast
   sprite: {fileID: 21300000, guid: 5eda55263bd259f448294f9ea79583ae, type: 3}
   shinySprite: {fileID: 21300000, guid: 6e79c83ae03e8bb4caa2474c48410fbd, type: 3}
