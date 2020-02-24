@@ -67,6 +67,7 @@ public class Battle_Script : MonoBehaviour
     public int enemyPokIndex;
     public List<int> enemyHps = new List<int> { };
 
+    private float effectiveness;
     void Start()
     {
         //toevoegen van de pokemonparty
@@ -167,11 +168,40 @@ public class Battle_Script : MonoBehaviour
         Debug.Log("enemyPok used: " + attackEnemy.name);
         Debug.Log("ourPok used: " + attackOur.name);
 
-        yield return new WaitForSeconds(1); //hier wachten wij 1 seconden voordat het script word hervat
+        yield return new WaitForSeconds(2); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
-        yield return new WaitForSeconds(1);
+        Eventtekst.text = ourpok.name + " used " + attackOur.name;
+        foreach (Type type in enemypok.types)
+        {
+            foreach (Type resistance in type.resistances)
+            {
+                if (resistance == attackOur.type)
+                {
+                    //move is not very effective
+                    effectiveness = effectiveness * 0.5f;
+                }
+            }
+            foreach (Type weakness in type.vunerabilities)
+            {
+                if (weakness == attackOur.type)
+                {
+                    //move is super effective
+                    effectiveness = effectiveness * 2f;
+                }
+            }
+            foreach (Type immunity in type.vunerabilities)
+            {
+                if (immunity == attackOur.type)
+                {
+                    //move has no effect
+                    effectiveness = 0f;
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(2);
         //move 2
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         //battleselection
 
 
@@ -201,12 +231,38 @@ public class Battle_Script : MonoBehaviour
 
     void chooseMove(int moveIndex)
     {
-        foreach (move item in pokemonparty.moveSets[ourpokIndex])
-        {
-            Debug.Log(item);
-        }
-        Debug.Log(pokemonparty.moveSets[ourpokIndex]);
         StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex] , enemypok.moves[0]));
+    }
+    float checkEffectiveness(move usedMove, Pokemon Defender)
+    {
+        foreach (Type type in Defender.types)
+        {
+            foreach (Type resistance in type.resistances)
+            {
+                if (resistance == usedMove.type)
+                {
+                    //move is not very effective
+                    effectiveness = effectiveness * 0.5f;
+                }
+            }
+            foreach (Type weakness in type.vunerabilities)
+            {
+                if (weakness == usedMove.type)
+                {
+                    //move is super effective
+                    effectiveness = effectiveness * 2f;
+                }
+            }
+            foreach (Type immunity in type.vunerabilities)
+            {
+                if (immunity == usedMove.type)
+                {
+                    //move has no effect
+                    effectiveness = 0f;
+                }
+            }
+        }
+        return effectiveness;
     }
 }
 
