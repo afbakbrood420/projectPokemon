@@ -134,10 +134,10 @@ public class Battle_Script : MonoBehaviour
 
     void updateUI()
     {
-        // aanroepen van player spirte
+        //de goede sprite in de Image component zetten
         Ourpoksprite.sprite = ourpok.sprite;
 
-        //aamroepen van enemysprite
+        //de goede sprite in de Image component zetten
         Enemypoksprite.sprite = enemypok.sprite;
 
         //pokemonnamen toevoegen
@@ -171,36 +171,8 @@ public class Battle_Script : MonoBehaviour
         yield return new WaitForSeconds(2); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
         Eventtekst.text = ourpok.name + " used " + attackOur.name;
-        foreach (Type type in enemypok.types)
-        {
-            foreach (Type resistance in type.resistances)
-            {
-                if (resistance == attackOur.type)
-                {
-                    //move is not very effective
-                    effectiveness = effectiveness * 0.5f;
-                }
-            }
-            foreach (Type weakness in type.vunerabilities)
-            {
-                if (weakness == attackOur.type)
-                {
-                    //move is super effective
-                    effectiveness = effectiveness * 2f;
-                }
-            }
-            foreach (Type immunity in type.vunerabilities)
-            {
-                if (immunity == attackOur.type)
-                {
-                    //move has no effect
-                    effectiveness = 0f;
-                }
-            }
-        }
-
         yield return new WaitForSeconds(2);
-        //move 2
+        DisplayEffectiveness(checkEffectiveness(attackOur,enemypok));
         yield return new WaitForSeconds(2);
         //battleselection
 
@@ -235,6 +207,7 @@ public class Battle_Script : MonoBehaviour
     }
     float checkEffectiveness(move usedMove, Pokemon Defender)
     {
+        effectiveness = 1f;
         foreach (Type type in Defender.types)
         {
             foreach (Type resistance in type.resistances)
@@ -253,7 +226,7 @@ public class Battle_Script : MonoBehaviour
                     effectiveness = effectiveness * 2f;
                 }
             }
-            foreach (Type immunity in type.vunerabilities)
+            foreach (Type immunity in type.immunities)
             {
                 if (immunity == usedMove.type)
                 {
@@ -263,6 +236,22 @@ public class Battle_Script : MonoBehaviour
             }
         }
         return effectiveness;
+    }
+    void DisplayEffectiveness(float effectiveness)
+    {
+        if (effectiveness > 1f)
+        {
+            Eventtekst.text = "its super effective!";
+        }
+        else if (effectiveness < 1f)
+        {
+            Eventtekst.text = "its not very effective...";
+        }
+        else if (effectiveness == 1f)
+        {
+            Debug.Log("effectiveness = 1");
+        }
+        Debug.Log("effectiveness = "+effectiveness.ToString());
     }
 }
 
