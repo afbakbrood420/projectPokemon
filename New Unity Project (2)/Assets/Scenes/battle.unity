@@ -651,7 +651,7 @@ PrefabInstance:
     - target: {fileID: 545106639044646493, guid: 0a4a0792df839154ca040761b08f7bab,
         type: 3}
       propertyPath: isTestParty
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 545106639044646493, guid: 0a4a0792df839154ca040761b08f7bab,
         type: 3}
@@ -1197,7 +1197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 114.630005, y: -80.15001}
+  m_AnchoredPosition: {x: 114.630005, y: -80.150024}
   m_SizeDelta: {x: -292.74, y: -160.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &465452871

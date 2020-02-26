@@ -68,6 +68,10 @@ public class Battle_Script : MonoBehaviour
     public List<int> enemyHps = new List<int> { };
 
     private float effectiveness;
+
+    private float stabResult;
+    private float atDefResult;
+    
     void Start()
     {
         //toevoegen van de pokemonparty
@@ -150,8 +154,6 @@ public class Battle_Script : MonoBehaviour
         move3.text = ourpok.moves[2].name;
         move4.text = ourpok.moves[3].name;
 
-        Eventtekst.text = "What will " + ourpok.name + " do?";
-
         // ourpok hp
         OurPokMaxHp.text = ourpok.HP.ToString();
         ourPokHp.text = pokemonparty.HPs[ourpokIndex].ToString();
@@ -168,6 +170,8 @@ public class Battle_Script : MonoBehaviour
         Debug.Log("enemyPok used: " + attackEnemy.name);
         Debug.Log("ourPok used: " + attackOur.name);
 
+
+
         yield return new WaitForSeconds(2); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
         Eventtekst.text = ourpok.name + " used " + attackOur.name;
@@ -179,8 +183,10 @@ public class Battle_Script : MonoBehaviour
 
         //eventtekst
         //hit. wacht 1 tel, 2e move
-        longmoves.changeVisibility(true);
+        longmoves.changeVisibility(false);
         fbpr.changeVisibility(true);
+        Eventtekst.text = "What will " + ourpok.name + " do?";
+        updateUI();
     }
 
     void bag()
@@ -252,6 +258,35 @@ public class Battle_Script : MonoBehaviour
             Debug.Log("effectiveness = 1");
         }
         Debug.Log("effectiveness = "+effectiveness.ToString());
+    }
+
+    //stab is een term voor pokemonspelers het staat voor same type attack bonus en geeft een extra boost aan de kracht van de aanval als
+    //er bepaalde eisen worden voldaan.
+    float stab(Pokemon defender,Pokemon attacker, move Move)
+    {
+        stabResult = 1f;
+
+        if (attacker.Attack >= attacker.SpAttack || Move.isSpecial == false || attacker.types.Contains(Move.type))
+        {
+            stabResult = 1.5f;
+        }
+        else if (attacker.SpAttack >= attacker.Attack || Move.isSpecial == true || attacker.types.Contains (Move.type))
+        {
+            stabResult = 1.5f;
+        }
+        return stabResult;
+    }
+    float atDef(Pokemon defender, Pokemon attacker, move Move)
+    {
+        if (Move.isSpecial == false)
+        {
+            atDefResult = (float)attacker.Attack/ (float)defender.Defense;
+        }
+        else
+        {
+            atDefResult = (float)attacker.SpAttack / (float)defender.SpDefense;
+        }
+        return atDefResult;
     }
 }
 
