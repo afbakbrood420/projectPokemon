@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-
-
-
 public class Battle_Script : MonoBehaviour
 {
 
@@ -43,8 +40,6 @@ public class Battle_Script : MonoBehaviour
     public Text OurPokMaxHp;
     public Text ourPokHp;
 
-
-
     // pp toevoegen
     [Header("misc")]
     public Text Eventtekst;
@@ -67,10 +62,15 @@ public class Battle_Script : MonoBehaviour
     public int enemyPokIndex;
     public List<int> enemyHps = new List<int> { };
 
+    //results for damage calculation functions
     private float effectiveness;
-
     private float stabResult;
     private float atDefResult;
+    private float damage;
+
+    //variables for storing the attacks in order
+    private bool playerIsFirst;
+
     
     void Start()
     {
@@ -88,8 +88,6 @@ public class Battle_Script : MonoBehaviour
         backbutton.onClick.AddListener(Backbuttonfunction);
         BagButton.onClick.AddListener(bag);
         initiateMoveButtons();
-
-
 
 
         if (pokemonparty.inBattle)
@@ -170,15 +168,26 @@ public class Battle_Script : MonoBehaviour
         Debug.Log("enemyPok used: " + attackEnemy.name);
         Debug.Log("ourPok used: " + attackOur.name);
 
-
+        if (ourpok.Speed >= enemypok.Speed)
+        {
+            playerIsFirst = true;
+        }
+        else
+        {
+            playerIsFirst = false;
+        }
 
         yield return new WaitForSeconds(2); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
-        Eventtekst.text = ourpok.name + " used " + attackOur.name;
+        displayAttack(attackEnemy, attackOur, true);
+
         yield return new WaitForSeconds(2);
+        useMove(attackOur, attackEnemy, true);
         DisplayEffectiveness(checkEffectiveness(attackOur,enemypok));
+
         yield return new WaitForSeconds(2);
         //battleselection
+        displayAttack(attackEnemy, attackOur, false);
 
 
         //eventtekst
@@ -276,6 +285,9 @@ public class Battle_Script : MonoBehaviour
         }
         return stabResult;
     }
+
+    //atDef is een term voor pokemon fans om uit een bepaalde game mechanic uit te drukken. Er komt namelijk een bonus als de situatie
+    //aan bepaalde eisen worden voldaan. 
     float atDef(Pokemon defender, Pokemon attacker, move Move)
     {
         if (Move.isSpecial == false)
@@ -287,6 +299,45 @@ public class Battle_Script : MonoBehaviour
             atDefResult = (float)attacker.SpAttack / (float)defender.SpDefense;
         }
         return atDefResult;
+    }
+    float CalcDamage(Pokemon defender, Pokemon attacker, move Move)
+    {
+        damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power;
+        return damage;
+    }
+    void useMove(move attackOur, move attackEnemy, bool isFirstMove)
+    { //all the if statements are for checking which pokemon goes first
+        if (isFirstMove)
+        {
+            if(playerIsFirst)
+            {
+                //use player move
+                //hp = hp - damage and damage is rounded to an int, because pokemon can only have an rounded number in hp.
+                enemyHps[enemyPokIndex] = enemyHps[enemyPokIndex] - (int)Mathf.Round(CalcDamage(enemypok, ourpok, attackOur));
+            }
+            else
+            {
+                //use enemy move. just the same as the one a few lines above. But reversed, so the player is defending and the enemy attacking.
+                pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, attackEnemy));
+            }
+        }
+        else
+        {
+            if (playerIsFirst == false)
+            {
+                enemyHps[enemyPokIndex] = enemyHps[enemyPokIndex] - (int)Mathf.Round(CalcDamage(enemypok, ourpok, attackOur));
+            }
+            else
+            {
+                pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, attackEnemy));
+            }
+        }
+        
+    }
+    void displayAttack(move attackEnemy,move attackOur, bool isFirstMove)
+    {
+        if (playerIsFirst == isFirstMove) { Eventtekst.text = ourpok.name + " used " + attackOur.name; }
+        else { Eventtekst.text = enemypok.name + " used " + attackEnemy.name; }
     }
 }
 
