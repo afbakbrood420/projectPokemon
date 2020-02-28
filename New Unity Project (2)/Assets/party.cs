@@ -14,6 +14,7 @@ public class party : MonoBehaviour
     public List<int> itemAmounts = new List<int> { };
     public bool isTestParty;
     public bool inBattle = false;
+    public bool automateMoveSelection = false;
 
     [Header("not to be assigned in the editor")]
     public int firsPokemonIndex;
@@ -32,11 +33,15 @@ public class party : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.FindGameObjectsWithTag("party").Length > 1)
+        {
+            Destroy(gameObject);
+        }
         if (isTestParty == false)
         {
             DontDestroyOnLoad(gameObject); //makes sure that this object is immortal
         }
-        else
+        if (automateMoveSelection)
         {
             //make test movesets by just taking the first 4
             foreach (Pokemon pokemon in pokemons)
@@ -108,7 +113,7 @@ public class party : MonoBehaviour
             currentPokemonIndex = pokemons.IndexOf(battle_Script.ourpok);
 
             //get the index of the enemies pokemon now in battle
-            enemyPokemonIndex = pokemons.IndexOf(battle_Script.enemypok);
+            enemyPokemonIndex = battle_Script.enemyPokIndex;
 
             //store the hps of the enemy
             EnemyHps = battle_Script.enemyHps;
@@ -131,3 +136,5 @@ public class party : MonoBehaviour
 
 
 }
+
+

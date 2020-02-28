@@ -6,7 +6,7 @@ public class targetFinderBuilder : MonoBehaviour
 {
     // Start is called before the first frame update
     public showHide ShowHide;
-    
+
     private party Party;
     public List<targetFinder> targetFinders = new List<targetFinder> { };
     public GameObject targetFinderPrefab;
@@ -18,8 +18,8 @@ public class targetFinderBuilder : MonoBehaviour
         Party = (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party);
         foreach (Pokemon pokemon in Party.pokemons)
         {
-            targetFinders.Add(Instantiate(targetFinderPrefab,transform).GetComponent("targetFinder") as targetFinder);
-            targetFinders[count].setPokemon(pokemon,Party.HPs[count], count);
+            targetFinders.Add(Instantiate(targetFinderPrefab, transform).GetComponent("targetFinder") as targetFinder);
+            targetFinders[count].setPokemon(pokemon, Party.HPs[count], count);
             count = count + 1;
         }
         ShowHide.initiate();
@@ -37,4 +37,7 @@ public class targetFinderBuilder : MonoBehaviour
             count = count + 1;
         }
     }
+
 }
+
+

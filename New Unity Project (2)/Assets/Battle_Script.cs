@@ -55,6 +55,9 @@ public class Battle_Script : MonoBehaviour
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
 
+    [Header("swapPokemon")]
+    public battlesceneHider swapPokemonHider;
+
     [Header("not for editor")]
     public Pokemon ourpok;
     public int ourpokIndex;
@@ -71,7 +74,7 @@ public class Battle_Script : MonoBehaviour
     //variables for storing the attacks in order
     private bool playerIsFirst;
 
-    
+
     void Start()
     {
         //toevoegen van de pokemonparty
@@ -104,6 +107,7 @@ public class Battle_Script : MonoBehaviour
         else
         {
             //making a new battle
+            pokemonparty.inBattle = true;
             ourpok = pokemonparty.pokemons[0];
             ourpokIndex = 0;
             enemypok = pokemonparty.trainer.pokemons[0];
@@ -115,8 +119,7 @@ public class Battle_Script : MonoBehaviour
             }
         }
 
-        //de pokemon = de bovenste pokemon
-
+        Eventtekst.text = "What will " + ourpok.name + " do?";
         //aanroepen van updateUI
         updateUI();
 
@@ -183,11 +186,16 @@ public class Battle_Script : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         useMove(attackOur, attackEnemy, true);
-        DisplayEffectiveness(checkEffectiveness(attackOur,enemypok));
+        updateUI();
+
+        yield return new WaitForSeconds(2);
+        displayAttack(attackEnemy, attackOur, false);
 
         yield return new WaitForSeconds(2);
         //battleselection
-        displayAttack(attackEnemy, attackOur, false);
+        useMove(attackOur, attackEnemy, false);
+        updateUI();
+        yield return new WaitForSeconds(2);
 
 
         //eventtekst
@@ -208,7 +216,7 @@ public class Battle_Script : MonoBehaviour
         pokemonparty.trainersDefeated.Add(pokemonparty.trainer);
         pokemonparty.endBattle();
     }
-    void initiateMoveButtons() 
+    void initiateMoveButtons()
     {
         move0b.onClick.AddListener(() => chooseMove(0));
         move1b.onClick.AddListener(() => chooseMove(1));
@@ -218,7 +226,7 @@ public class Battle_Script : MonoBehaviour
 
     void chooseMove(int moveIndex)
     {
-        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex] , enemypok.moves[0]));
+        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[0]));
     }
     float checkEffectiveness(move usedMove, Pokemon Defender)
     {
@@ -250,6 +258,8 @@ public class Battle_Script : MonoBehaviour
                 }
             }
         }
+        Debug.Log("effectiveness = " + effectiveness.ToString());
+        DisplayEffectiveness(effectiveness);
         return effectiveness;
     }
     void DisplayEffectiveness(float effectiveness)
@@ -266,12 +276,12 @@ public class Battle_Script : MonoBehaviour
         {
             Debug.Log("effectiveness = 1");
         }
-        Debug.Log("effectiveness = "+effectiveness.ToString());
+        Debug.Log("effectiveness = " + effectiveness.ToString());
     }
 
     //stab is een term voor pokemonspelers het staat voor same type attack bonus en geeft een extra boost aan de kracht van de aanval als
     //er bepaalde eisen worden voldaan.
-    float stab(Pokemon defender,Pokemon attacker, move Move)
+    float stab(Pokemon defender, Pokemon attacker, move Move)
     {
         stabResult = 1f;
 
@@ -279,7 +289,7 @@ public class Battle_Script : MonoBehaviour
         {
             stabResult = 1.5f;
         }
-        else if (attacker.SpAttack >= attacker.Attack || Move.isSpecial == true || attacker.types.Contains (Move.type))
+        else if (attacker.SpAttack >= attacker.Attack || Move.isSpecial == true || attacker.types.Contains(Move.type))
         {
             stabResult = 1.5f;
         }
@@ -292,7 +302,7 @@ public class Battle_Script : MonoBehaviour
     {
         if (Move.isSpecial == false)
         {
-            atDefResult = (float)attacker.Attack/ (float)defender.Defense;
+            atDefResult = (float)attacker.Attack / (float)defender.Defense;
         }
         else
         {
@@ -302,14 +312,14 @@ public class Battle_Script : MonoBehaviour
     }
     float CalcDamage(Pokemon defender, Pokemon attacker, move Move)
     {
-        damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power;
+        damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power * 0.5f;
         return damage;
     }
     void useMove(move attackOur, move attackEnemy, bool isFirstMove)
     { //all the if statements are for checking which pokemon goes first
         if (isFirstMove)
         {
-            if(playerIsFirst)
+            if (playerIsFirst)
             {
                 //use player move
                 //hp = hp - damage and damage is rounded to an int, because pokemon can only have an rounded number in hp.
@@ -332,12 +342,37 @@ public class Battle_Script : MonoBehaviour
                 pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, attackEnemy));
             }
         }
-        
+        if (enemyHps[enemyPokIndex] <= 0)
+        {
+            Debug.Log("enemy pokemon fainted");
+            interruptBattleRound();
+            enemyHps[enemyPokIndex] = 0;
+        }
+        else if (pokemonparty.HPs[ourpokIndex] <= 0)
+        {
+            Debug.Log("our pokemon fainted");
+            interruptBattleRound();
+            pokemonparty.HPs[ourpokIndex] = 0;
+        }
+
     }
-    void displayAttack(move attackEnemy,move attackOur, bool isFirstMove)
+    void displayAttack(move attackEnemy, move attackOur, bool isFirstMove)
     {
         if (playerIsFirst == isFirstMove) { Eventtekst.text = ourpok.name + " used " + attackOur.name; }
         else { Eventtekst.text = enemypok.name + " used " + attackEnemy.name; }
+    }
+    void interruptBattleRound()
+    {
+        longmoves.changeVisibility(false);
+        fbpr.changeVisibility(true);
+        Eventtekst.text = "What will " + ourpok.name + " do?";
+        updateUI();
+    }
+    public void switchPokemon(int newIndex)
+    {
+        ourpokIndex = newIndex;
+        ourpok = pokemonparty.pokemons[newIndex];
+        updateUI();
     }
 }
 
@@ -351,4 +386,5 @@ public class Battle_Script : MonoBehaviour
 // berekening - hp / displaybar
 //eventtekst, effectiveness
 //reset
+
 

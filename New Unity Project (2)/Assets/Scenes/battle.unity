@@ -670,6 +670,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e3765c2dad528e4428d1abfcf7f55630,
         type: 2}
+    - target: {fileID: 545106639044646493, guid: 0a4a0792df839154ca040761b08f7bab,
+        type: 3}
+      propertyPath: automateMoveSelection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545106639044646493, guid: 0a4a0792df839154ca040761b08f7bab,
+        type: 3}
+      propertyPath: pokemons.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 649f58cdb4b4a33468f88b9218873313,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a4a0792df839154ca040761b08f7bab, type: 3}
 --- !u!1 &255247546
@@ -3711,17 +3722,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -4182,6 +4193,7 @@ MonoBehaviour:
   pokemonparty: {fileID: 0}
   longmoves: {fileID: 1060868614}
   fbpr: {fileID: 446736911}
+  swapPokemonHider: {fileID: 0}
   ourpok: {fileID: 0}
   ourpokIndex: 0
   enemypok: {fileID: 0}

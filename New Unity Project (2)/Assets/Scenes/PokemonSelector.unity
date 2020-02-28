@@ -1768,12 +1768,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f80beb3f395f441bb4105ff68ae89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainer: {fileID: 0}
   pokemons: []
   HPs: 
   items:
   - {fileID: 11400000, guid: 4c089b603056666419c407b103a08d3e, type: 2}
   itemAmounts: 0a000000
   isTestParty: 0
+  inBattle: 0
+  automateMoveSelection: 0
+  firsPokemonIndex: 0
+  currentPokemonIndex: 0
+  enemyPokemonIndex: 0
+  EnemyHps: 
+  trainersDefeated: []
 --- !u!4 &1615372261
 Transform:
   m_ObjectHideFlags: 0

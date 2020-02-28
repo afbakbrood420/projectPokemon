@@ -14,7 +14,7 @@ public class targetFinder : MonoBehaviour
     public Text txt;
     public int hp;
     public int indexInParty;
-    
+
     // Start is called before the first frame update
     public void setPokemon(Pokemon newPokemon, int newHp, int newIndex)
     {
@@ -38,7 +38,14 @@ public class targetFinder : MonoBehaviour
     }
     void chooseTarget()
     {
-        GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
+        try
+        {
+            GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
+        }
+        catch (System.Exception)
+        {
+            (GameObject.FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>() as Battle_Script).switchPokemon(indexInParty);
+        }
     }
     public void updateHp(int newHp)
     {
@@ -46,3 +53,5 @@ public class targetFinder : MonoBehaviour
         hpBar.value = (float)hp / (float)pokemon.HP;
     }
 }
+
+
