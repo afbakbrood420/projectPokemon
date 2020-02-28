@@ -73,6 +73,7 @@ public class Battle_Script : MonoBehaviour
 
     //variables for storing the attacks in order
     private bool playerIsFirst;
+    private move enemyMoveWhenItem;
 
 
     void Start()
@@ -226,7 +227,7 @@ public class Battle_Script : MonoBehaviour
 
     void chooseMove(int moveIndex)
     {
-        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[0]));
+        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))]));
     }
     float checkEffectiveness(move usedMove, Pokemon Defender)
     {
@@ -373,6 +374,28 @@ public class Battle_Script : MonoBehaviour
         ourpokIndex = newIndex;
         ourpok = pokemonparty.pokemons[newIndex];
         updateUI();
+    }
+    public IEnumerator spendItem(Item item)
+    {
+        longmoves.changeVisibility(false);
+        fbpr.changeVisibility(false);
+
+        Eventtekst.text = "you used a " + item.name;
+        yield return new WaitForSeconds(2);
+        enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f,3.4f))];
+        Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
+        yield return new WaitForSeconds(2);
+        DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem,ourpok));
+        pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, enemyMoveWhenItem));
+        if (pokemonparty.HPs[ourpokIndex] <= 0)
+        {
+            pokemonparty.HPs[ourpokIndex] = 0;
+            interruptBattleRound();
+            Debug.Log("ourpok fainted");
+        }
+        yield return new WaitForSeconds(2);
+        interruptBattleRound();
+
     }
 }
 

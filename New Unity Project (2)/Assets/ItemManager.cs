@@ -38,6 +38,6 @@ public class ItemManager : MonoBehaviour
     {
         showHide.hide();
         Party.applyItem(chosenItem,index);
-        Party.exitInventory();
+        //Party.exitInventory();
     }
 }

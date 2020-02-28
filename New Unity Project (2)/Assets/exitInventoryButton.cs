@@ -16,7 +16,7 @@ public class exitInventoryButton : MonoBehaviour
     public void exitInventory()
     {
         Debug.Log("exitingInventory");
-        Party.exitInventory();
+        Party.exitInventory(null);
     }
     private void Update()
     {

@@ -30,6 +30,9 @@ public class party : MonoBehaviour
 
     private Battle_Script battle_Script;
     private List<move> moveSetToAdd = new List<move> { };
+    private Item lastUsedItem;
+
+
 
     void Start()
     {
@@ -88,19 +91,35 @@ public class party : MonoBehaviour
         {
             items.Remove(item);
         }
+        exitInventory(item);
     }
 
     //for exiting the inventory
-    public void exitInventory()
+    public void exitInventory(Item item)
     {
-        if (inBattle)
+        if (inBattle) //if we opened the inventory out of a battle, we go back to the battle.
         {
             SceneManager.LoadScene("Scenes/battle");
+            if (item != null) //if the player used an item in the inventory, make sure that the player spends a turn doing that
+            {
+                lastUsedItem = item;
+                SceneManager.sceneLoaded += onSceneLoad; 
+                //we are adding an action to an event here. The event is triggered once
+                //the new scene is loaded, because the objects are not instantiated yet.
+                //when using scenemanager.loadscene the scene is loaded the next frame, so we cant do GameObject.Find() which we need.
+            }
         }
         else
         {
             SceneManager.LoadScene("Scenes/map");
         }
+    }
+    //delegete 
+    //with help from: https://answers.unity.com/questions/1279397/onscenewasloaded-deprecated-cannot-find-work-aroun.html
+    void onSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(FindObjectOfType<Battle_Script>().spendItem(lastUsedItem));
+        SceneManager.sceneLoaded -= onSceneLoad;
     }
 
     //for accesing the inventory
