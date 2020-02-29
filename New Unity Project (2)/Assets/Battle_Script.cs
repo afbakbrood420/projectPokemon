@@ -47,6 +47,7 @@ public class Battle_Script : MonoBehaviour
  
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
+    public move incapacitatedMove;
 
     [Header("swapPokemon")]
     public showHide pokSlcShowHide;
@@ -68,6 +69,7 @@ public class Battle_Script : MonoBehaviour
     //variables for storing the attacks in order
     private bool playerIsFirst;
     private move enemyMoveWhenItem;
+    private bool playerHasFreeAction = false;
 
 
     void Start()
@@ -210,6 +212,7 @@ public class Battle_Script : MonoBehaviour
         fbpr.changeVisibility(true);
         Eventtekst.text = "What will " + ourpok.name + " do?";
         updateUI();
+        checkForFaint();
     }
 
     void bag()
@@ -232,8 +235,18 @@ public class Battle_Script : MonoBehaviour
 
     void chooseMove(int moveIndex)
     {
-        StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))]));
+        if (playerHasFreeAction)
+        {
+            StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], incapacitatedMove));
+        }
+        else
+        {
+            StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))]));
+        }
+        playerHasFreeAction = false;
     }
+
+
     float checkEffectiveness(move usedMove, Pokemon Defender)
     {
         effectiveness = 1f;
@@ -264,10 +277,11 @@ public class Battle_Script : MonoBehaviour
                 }
             }
         }
-        Debug.Log("effectiveness = " + effectiveness.ToString());
         DisplayEffectiveness(effectiveness);
         return effectiveness;
     }
+
+
     void DisplayEffectiveness(float effectiveness)
     {
         if (effectiveness > 1f)
@@ -316,11 +330,15 @@ public class Battle_Script : MonoBehaviour
         }
         return atDefResult;
     }
+
+
     float CalcDamage(Pokemon defender, Pokemon attacker, move Move)
     {
         damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power * 0.25f;
         return damage;
     }
+
+
     void useMove(move attackOur, move attackEnemy, bool isFirstMove)
     { //all the if statements are for checking which pokemon goes first
         if (isFirstMove)
@@ -348,34 +366,30 @@ public class Battle_Script : MonoBehaviour
                 pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, attackEnemy));
             }
         }
-        if (enemyHps[enemyPokIndex] <= 0)
-        {
-            Debug.Log("enemy pokemon fainted");
-            interruptBattleRound();
-            enemyHps[enemyPokIndex] = 0;
-        }
-        else if (pokemonparty.HPs[ourpokIndex] <= 0)
-        {
-            Debug.Log("our pokemon fainted");
-            interruptBattleRound();
-            pokemonparty.HPs[ourpokIndex] = 0;
-        }
-
+        checkForFaint();
     }
+
+
     void displayAttack(move attackEnemy, move attackOur, bool isFirstMove)
     {
         if (playerIsFirst == isFirstMove) { Eventtekst.text = ourpok.name + " used " + attackOur.name; }
         else { Eventtekst.text = enemypok.name + " used " + attackEnemy.name; }
     }
+
+
     void interruptBattleRound()
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(true);
         Eventtekst.text = "What will " + ourpok.name + " do?";
         updateUI();
+        StopAllCoroutines();
     }
+
+
     public void switchPokemon(int newIndex)
     {
+        pokSlcBack.interactable = true;
         ourpokIndex = newIndex;
         ourpok = pokemonparty.pokemons[newIndex];
         pokSlcShowHide.hide();
@@ -386,6 +400,8 @@ public class Battle_Script : MonoBehaviour
         Eventtekst.text = ourpok.name + " I choose you!";
         StartCoroutine(enemyFreeAction());
     }
+
+
     public void spendItem(Item item)
     {
         longmoves.changeVisibility(false);
@@ -394,22 +410,61 @@ public class Battle_Script : MonoBehaviour
         Eventtekst.text = "you used a " + item.name;
         StartCoroutine(enemyFreeAction());
     }
+
+
     public IEnumerator enemyFreeAction()
     {
-        yield return new WaitForSeconds(2);
-        enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))];
+        if (playerHasFreeAction)
+        {
+            enemyMoveWhenItem = incapacitatedMove;
+            playerHasFreeAction = false;
+        }
+        else
+        {
+            enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.3f))];
+        }
+        playerHasFreeAction = false;
         Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
         yield return new WaitForSeconds(2);
         DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem, ourpok));
         pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, enemyMoveWhenItem));
-        if (pokemonparty.HPs[ourpokIndex] <= 0)
-        {
-            pokemonparty.HPs[ourpokIndex] = 0;
-            interruptBattleRound();
-            Debug.Log("ourpok fainted");
-        }
+        checkForFaint();
         yield return new WaitForSeconds(2);
         interruptBattleRound();
+        checkForFaint();
+    }
+
+
+    void checkForFaint()
+    {
+        if (enemyHps[enemyPokIndex] <= 0)
+        {
+            Debug.Log("enemy pokemon fainted");
+            interruptBattleRound();
+            enemyHps[enemyPokIndex] = 0;
+
+            playerHasFreeAction = true;
+            enemyPokIndex += 1;
+            if (enemyPokIndex > pokemonparty.trainer.pokemons.Count)
+            {
+                pokemonparty.endBattle();
+                return;
+            }
+
+            enemypok = pokemonparty.trainer.pokemons[enemyPokIndex];
+            updateUI();
+            Debug.Log(playerHasFreeAction);
+        }
+        else if (pokemonparty.HPs[ourpokIndex] <= 0)
+        {
+            Debug.Log("our pokemon fainted");
+            interruptBattleRound();
+            pokemonparty.HPs[ourpokIndex] = 0;
+            pokemonparty.fainted[ourpokIndex] = false;
+            pokemonButtonFunction();
+            pokSlcBack.interactable = false;
+            fbpr.changeVisibility(false);
+        }
     }
 }
 

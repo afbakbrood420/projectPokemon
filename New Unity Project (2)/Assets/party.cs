@@ -10,6 +10,7 @@ public class party : MonoBehaviour
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public List<int> HPs = new List<int> { };
     public List<List<move>> moveSets = new List<List<move>> { };
+    public List<bool> fainted = new List<bool> {  };
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
     public bool isTestParty;
@@ -36,6 +37,10 @@ public class party : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < 6; i++)
+        {
+            fainted.Add(true);
+        }
         if (GameObject.FindGameObjectsWithTag("party").Length > 1)
         {
             Destroy(gameObject);
@@ -151,6 +156,11 @@ public class party : MonoBehaviour
     public void endBattle()
     {
         SceneManager.LoadScene("Scenes/map");
+        trainersDefeated.Add(trainer);
+    }
+    public void lose()
+    {
+
     }
 
 

@@ -14,6 +14,10 @@ public class targetFinder : MonoBehaviour
     public Text txt;
     public int hp;
     public int indexInParty;
+    public Image backgroundImage;
+    public Color faintedColor;
+    public Color normalColor;
+    private party Party;
 
     // Start is called before the first frame update
     public void setPokemon(Pokemon newPokemon, int newHp, int newIndex)
@@ -23,8 +27,9 @@ public class targetFinder : MonoBehaviour
         hp = newHp;
         txt.text = pokemon.name;
         img.sprite = pokemon.sprite;
-        hpBar.value = (float)hp / (float)pokemon.HP;
         button.onClick.AddListener(chooseTarget);
+        updateHp(newHp);
+
     }
     public void visibility(bool visible)
     {
@@ -35,6 +40,7 @@ public class targetFinder : MonoBehaviour
         buttonImg.enabled = visible;
         button.enabled = visible;
         blocker.enabled = visible;
+        updateHp(FindObjectOfType<party>().GetComponent<party>().HPs[indexInParty]);
     }
     void chooseTarget()
     {
@@ -46,11 +52,21 @@ public class targetFinder : MonoBehaviour
         {
             (GameObject.FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>() as Battle_Script).switchPokemon(indexInParty);
         } 
+
     }
     public void updateHp(int newHp)
     {
         hp = newHp;
         hpBar.value = (float)hp / (float)pokemon.HP;
+        if (newHp <= 0)
+        {
+            button.enabled = false;
+            backgroundImage.color = faintedColor;
+        }
+        else
+        {
+            backgroundImage.color = normalColor;
+        }
     }
 }
 

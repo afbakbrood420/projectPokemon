@@ -4738,6 +4738,7 @@ MonoBehaviour:
   pokemonparty: {fileID: 0}
   longmoves: {fileID: 1060868614}
   fbpr: {fileID: 446736911}
+  incapacitatedMove: {fileID: 11400000, guid: fdce47b02d0dc1a418388da71f367244, type: 2}
   pokSlcShowHide: {fileID: 1760582284}
   pokSlcBack: {fileID: 1342281452}
   ourpok: {fileID: 0}
