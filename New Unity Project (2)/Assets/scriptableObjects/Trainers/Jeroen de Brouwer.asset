@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8d8f596c660558e4f838d1abc9fe327f, type: 2}
   - {fileID: 11400000, guid: e3765c2dad528e4428d1abfcf7f55630, type: 2}
   name: Jeroen de Brouwer
+  trainerTheme: {fileID: 8300000, guid: dc39a4c8684be87448a5a25eda10517e, type: 3}

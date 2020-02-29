@@ -7,15 +7,23 @@ using UnityEngine.SceneManagement;
 public class party : MonoBehaviour
 {
     public Trainer trainer;
+
+    [Header("pokemon lists")]
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public List<int> HPs = new List<int> { };
     public List<List<move>> moveSets = new List<List<move>> { };
     public List<bool> fainted = new List<bool> {  };
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
+
+    [Header("debug settings and misc")]
     public bool isTestParty;
     public bool inBattle = false;
     public bool automateMoveSelection = false;
+
+    [Header("audio")]
+    public AudioSource musicSource;
+    public AudioClip mapMusic;
 
     [Header("not to be assigned in the editor")]
     public int firsPokemonIndex;
@@ -63,6 +71,7 @@ public class party : MonoBehaviour
                 moveSets.Add(moveSetToAdd);
             }
         }
+        resetMusic();
     }
     //this is called by an object in the pokemonselector screen once all the pokemons are chosen
     void IchooseThese(List<Pokemon> newParty)
@@ -153,6 +162,7 @@ public class party : MonoBehaviour
     {
         trainer = newTrainer;
         SceneManager.LoadScene("Scenes/battle");
+
     }
     public void endBattle()
     {
@@ -162,6 +172,19 @@ public class party : MonoBehaviour
     public void lose()
     {
         SceneManager.LoadScene("Scenes/titleScreen");
+    }
+    public void resetMusic()
+    {
+        musicSource.Stop();
+        if (inBattle)
+        {
+            musicSource.clip = trainer.trainerTheme;
+        }
+        else
+        {
+            musicSource.clip = mapMusic;
+        }
+        musicSource.Play();
     }
 
 

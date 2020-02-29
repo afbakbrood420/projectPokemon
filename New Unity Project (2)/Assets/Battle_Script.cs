@@ -123,7 +123,7 @@ public class Battle_Script : MonoBehaviour
         Eventtekst.text = "What will " + ourpok.name + " do?";
         //aanroepen van updateUI
         updateUI();
-
+        pokemonparty.resetMusic();
     }
 
     void Fightbuttonfunction()

@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ed2cce019317b448bfb736dca9d812, type: 2}
   - {fileID: 11400000, guid: a5cc09ee4d5b82e4082e6067dfb3b3b1, type: 2}
   name: Joa
+  trainerTheme: {fileID: 8300000, guid: 1e291dd192034764098bf9cd2e881105, type: 3}

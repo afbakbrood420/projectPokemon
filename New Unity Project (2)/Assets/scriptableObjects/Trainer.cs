@@ -12,21 +12,6 @@ public class Trainer : ScriptableObject
 {
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public new string name;
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public AudioClip trainerTheme;
 
 }
