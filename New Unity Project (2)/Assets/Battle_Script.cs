@@ -70,6 +70,7 @@ public class Battle_Script : MonoBehaviour
     private bool playerIsFirst;
     private move enemyMoveWhenItem;
     private bool playerHasFreeAction = false;
+    private bool playerWon = false;
 
 
     void Start()
@@ -167,7 +168,15 @@ public class Battle_Script : MonoBehaviour
         OurPokMaxHp.text = ourpok.HP.ToString();
         ourPokHp.text = pokemonparty.HPs[ourpokIndex].ToString();
         dbOurpok.value = (float)pokemonparty.HPs[ourpokIndex] / (float)ourpok.HP;
-        dbEnemypok.value = (float)enemyHps[enemyPokIndex] / (float)enemypok.HP;
+        try //this needs a try statement because it will throw an error once the enemypokindex is higher then the list. which
+        {   //happens when the player wins.
+            dbEnemypok.value = (float)enemyHps[enemyPokIndex] / (float)enemypok.HP;
+        }
+        catch (System.Exception)
+        {
+            
+        }
+        
 
     }
 
@@ -294,9 +303,8 @@ public class Battle_Script : MonoBehaviour
         }
         else if (effectiveness == 1f)
         {
-            Debug.Log("effectiveness = 1");
+            Eventtekst.text = "its effective";
         }
-        Debug.Log("effectiveness = " + effectiveness.ToString());
     }
 
     //stab is een term voor pokemonspelers het staat voor same type attack bonus en geeft een extra boost aan de kracht van de aanval als
@@ -414,6 +422,7 @@ public class Battle_Script : MonoBehaviour
 
     public IEnumerator enemyFreeAction()
     {
+        yield return new WaitForEndOfFrame();
         if (playerHasFreeAction)
         {
             enemyMoveWhenItem = incapacitatedMove;
@@ -421,7 +430,7 @@ public class Battle_Script : MonoBehaviour
         }
         else
         {
-            enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.3f))];
+            enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))];
         }
         playerHasFreeAction = false;
         Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
@@ -445,7 +454,7 @@ public class Battle_Script : MonoBehaviour
 
             playerHasFreeAction = true;
             enemyPokIndex += 1;
-            if (enemyPokIndex > pokemonparty.trainer.pokemons.Count)
+            if (enemyPokIndex > pokemonparty.trainer.pokemons.Count -1)
             {
                 pokemonparty.endBattle();
                 return;
@@ -464,6 +473,33 @@ public class Battle_Script : MonoBehaviour
             pokemonButtonFunction();
             pokSlcBack.interactable = false;
             fbpr.changeVisibility(false);
+        }
+        checkforWinnings();
+    }
+    void checkforWinnings()
+    {
+        if (pokemonparty.fainted.Contains(true) == false)
+        {
+            foreach (bool i in pokemonparty.fainted)
+            {
+                Debug.Log(i);
+            }
+            pokemonparty.lose();
+        }
+        else
+        {
+            playerWon = true;
+            foreach (int hp in enemyHps)
+            {
+                if (hp > 0)
+                {
+                    playerWon = false;
+                }
+            }
+            if (playerWon)
+            {
+                pokemonparty.endBattle();
+            }
         }
     }
 }

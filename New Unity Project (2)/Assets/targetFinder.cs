@@ -18,6 +18,7 @@ public class targetFinder : MonoBehaviour
     public Color faintedColor;
     public Color normalColor;
     private party Party;
+    private bool usedForPokemonSwap;
 
     // Start is called before the first frame update
     public void setPokemon(Pokemon newPokemon, int newHp, int newIndex)
@@ -29,7 +30,7 @@ public class targetFinder : MonoBehaviour
         img.sprite = pokemon.sprite;
         button.onClick.AddListener(chooseTarget);
         updateHp(newHp);
-
+        usedForPokemonSwap = FindObjectOfType<Battle_Script>() != null;
     }
     public void visibility(bool visible)
     {
@@ -44,21 +45,20 @@ public class targetFinder : MonoBehaviour
     }
     void chooseTarget()
     {
-        try
+        if(usedForPokemonSwap)
         {
-            GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
+            FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>().switchPokemon(indexInParty);
         }
-        catch 
+        else
         {
-            (GameObject.FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>() as Battle_Script).switchPokemon(indexInParty);
+            FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
         } 
-
     }
     public void updateHp(int newHp)
     {
         hp = newHp;
         hpBar.value = (float)hp / (float)pokemon.HP;
-        if (newHp <= 0)
+        if (newHp <= 0 && usedForPokemonSwap)
         {
             button.enabled = false;
             backgroundImage.color = faintedColor;

@@ -37,6 +37,7 @@ public class party : MonoBehaviour
 
     void Start()
     {
+        fainted = new List<bool> { };
         for (int i = 0; i < 6; i++)
         {
             fainted.Add(true);
@@ -160,7 +161,7 @@ public class party : MonoBehaviour
     }
     public void lose()
     {
-
+        SceneManager.LoadScene("Scenes/titleScreen");
     }
 
 

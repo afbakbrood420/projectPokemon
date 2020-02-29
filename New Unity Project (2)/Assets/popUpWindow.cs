@@ -26,11 +26,11 @@ public class popUpWindow : MonoBehaviour
         btn.enabled = false;
         foreach (Image image in images)
         {
-            image.enabled = false;
+            image.enabled = false; //when image components are disabled, they dont render
         }
         foreach (Text text in texts)
         {
-            text.enabled = false;
+            text.enabled = false;//the same is true for texts
         }
     }
 
@@ -49,7 +49,7 @@ public class popUpWindow : MonoBehaviour
     }
 
     //this is called by various gameobjects which want to notify the player of something
-    void notification(string msg)
+    public void notification(string msg)
     {
         msgText.text = msg;
         showAll();
