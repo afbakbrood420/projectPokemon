@@ -118,7 +118,7 @@ public class party : MonoBehaviour
     //with help from: https://answers.unity.com/questions/1279397/onscenewasloaded-deprecated-cannot-find-work-aroun.html
     void onSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(FindObjectOfType<Battle_Script>().spendItem(lastUsedItem));
+        FindObjectOfType<Battle_Script>().spendItem(lastUsedItem);
         SceneManager.sceneLoaded -= onSceneLoad;
     }
 

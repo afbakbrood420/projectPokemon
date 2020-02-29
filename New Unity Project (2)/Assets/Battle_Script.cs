@@ -44,19 +44,13 @@ public class Battle_Script : MonoBehaviour
     [Header("misc")]
     public Text Eventtekst;
     public party pokemonparty;
-
-
-    // public rekemachine;
-    //stats
-    //types
-    // speed ourpok == speed enemypok; then random int
-
-
+ 
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
 
     [Header("swapPokemon")]
-    public battlesceneHider swapPokemonHider;
+    public showHide pokSlcShowHide;
+    public Button pokSlcBack;
 
     [Header("not for editor")]
     public Pokemon ourpok;
@@ -89,8 +83,11 @@ public class Battle_Script : MonoBehaviour
         longmoves.changeVisibility(false);
         //backbutton - als je klikt gaat backbutotnfunction aan.
 
+        //zorg dat de goede functies worden uitgevoerd op een buttonpress
         backbutton.onClick.AddListener(Backbuttonfunction);
         BagButton.onClick.AddListener(bag);
+        PokemonButton.onClick.AddListener(pokemonButtonFunction);
+        pokSlcBack.onClick.AddListener(pokSlcBackBtnFunction);
         initiateMoveButtons();
 
 
@@ -136,6 +133,14 @@ public class Battle_Script : MonoBehaviour
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(true);
+    }
+    void pokemonButtonFunction()
+    {
+        pokSlcShowHide.show();
+    }
+    void pokSlcBackBtnFunction()
+    {
+        pokSlcShowHide.hide();
     }
 
     void updateUI()
@@ -313,7 +318,7 @@ public class Battle_Script : MonoBehaviour
     }
     float CalcDamage(Pokemon defender, Pokemon attacker, move Move)
     {
-        damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power * 0.5f;
+        damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power * 0.25f;
         return damage;
     }
     void useMove(move attackOur, move attackEnemy, bool isFirstMove)
@@ -373,19 +378,29 @@ public class Battle_Script : MonoBehaviour
     {
         ourpokIndex = newIndex;
         ourpok = pokemonparty.pokemons[newIndex];
+        pokSlcShowHide.hide();
         updateUI();
+        longmoves.changeVisibility(false);
+        fbpr.changeVisibility(false);
+
+        Eventtekst.text = ourpok.name + " I choose you!";
+        StartCoroutine(enemyFreeAction());
     }
-    public IEnumerator spendItem(Item item)
+    public void spendItem(Item item)
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(false);
 
         Eventtekst.text = "you used a " + item.name;
+        StartCoroutine(enemyFreeAction());
+    }
+    public IEnumerator enemyFreeAction()
+    {
         yield return new WaitForSeconds(2);
-        enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f,3.4f))];
+        enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))];
         Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
         yield return new WaitForSeconds(2);
-        DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem,ourpok));
+        DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem, ourpok));
         pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, enemyMoveWhenItem));
         if (pokemonparty.HPs[ourpokIndex] <= 0)
         {
@@ -395,7 +410,6 @@ public class Battle_Script : MonoBehaviour
         }
         yield return new WaitForSeconds(2);
         interruptBattleRound();
-
     }
 }
 

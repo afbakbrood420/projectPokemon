@@ -1605,5 +1605,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Party
       objectReference: {fileID: 0}
+    - target: {fileID: 545106639044646492, guid: 0a4a0792df839154ca040761b08f7bab,
+        type: 3}
+      propertyPath: m_TagString
+      value: party
+      objectReference: {fileID: 0}
+    - target: {fileID: 545106639044646493, guid: 0a4a0792df839154ca040761b08f7bab,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a4a0792df839154ca040761b08f7bab, type: 3}

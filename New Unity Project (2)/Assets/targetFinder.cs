@@ -38,8 +38,14 @@ public class targetFinder : MonoBehaviour
     }
     void chooseTarget()
     {
-        GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
-        //(GameObject.FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>() as Battle_Script).switchPokemon(indexInParty);        
+        try
+        {
+            GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseTarget(indexInParty);
+        }
+        catch 
+        {
+            (GameObject.FindObjectOfType<Battle_Script>().GetComponent<Battle_Script>() as Battle_Script).switchPokemon(indexInParty);
+        } 
     }
     public void updateHp(int newHp)
     {

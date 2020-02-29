@@ -98,6 +98,7 @@ MonoBehaviour:
   button: {fileID: 5348677565562208538}
   txt: {fileID: 5303685809395389511}
   hp: 0
+  indexInParty: 0
 --- !u!1 &5303685809395389513
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +502,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647048826610181675, guid: 6703baff29c82b04d92c6a9146986619,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647048826610181675, guid: 6703baff29c82b04d92c6a9146986619,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000019073486
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647048826610181675, guid: 6703baff29c82b04d92c6a9146986619,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -11.963
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6703baff29c82b04d92c6a9146986619, type: 3}

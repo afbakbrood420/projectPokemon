@@ -12,8 +12,10 @@ public class showHide : MonoBehaviour
 
     
     public List<Image> rest = new List<Image> { };
+    public List<Text> restTexts = new List<Text> { };
 
     public targetFinderBuilder TargetFinderBuilder;
+    public Scrollbar scrollbar;
 
     private void Update()
     {
@@ -37,6 +39,10 @@ public class showHide : MonoBehaviour
         {
             img.enabled = false;
         }
+        foreach (Text txt in restTexts)
+        {
+            txt.enabled = false;
+        }
     }
     public void show()
     {
@@ -47,6 +53,10 @@ public class showHide : MonoBehaviour
         foreach (Image img in rest)
         {
             img.enabled = true;
+        }
+        foreach (Text txt in restTexts)
+        {
+            txt.enabled = true;
         }
     }
 }
