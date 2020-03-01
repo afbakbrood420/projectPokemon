@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class Bewegingsemulgator : MonoBehaviour
 
@@ -14,6 +14,8 @@ public class Bewegingsemulgator : MonoBehaviour
 
     public LayerMask blockDetector;
     //Eigenschap van walkDirection, checkt of er iets staat waar hij niet mag komen, bijvoorbeeld muren of voorwerpen.
+
+    public LayerMask SceneShifter;
 
     void Start()
     //Wat de computer bij het opstarten moet laden / uitvoeren.
@@ -33,18 +35,23 @@ public class Bewegingsemulgator : MonoBehaviour
 
             if ((Input.GetAxisRaw("Horizontal")) == 1f || (Input.GetAxisRaw("Horizontal") == -1f))
             {
-                if (!Physics2D.OverlapCircle(walkDirection.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), 0.2f, blockDetector))
+                if (!Physics2D.OverlapCircle(walkDirection.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), 0.05f, blockDetector))
                 {
                     walkDirection.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
+ 
             }
 
             else if ((Input.GetAxisRaw("Vertical")) == 1f || (Input.GetAxisRaw("Vertical") == -1f))
             {
-                if (!Physics2D.OverlapCircle(walkDirection.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), 0.2f, blockDetector))
+                if (!Physics2D.OverlapCircle(walkDirection.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), 0.05f, blockDetector))
                 {
                     walkDirection.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
                 }
+            }
+            if (Physics2D.OverlapCircle(transform.position, 0.05f, SceneShifter))
+            {
+                SceneManager.LoadScene("map2");
             }
         }
     }
