@@ -18,8 +18,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Block
+  - Player
   - 
   - 
   - 
@@ -45,4 +45,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 2945039927
+    locked: 0
+  - name: Player
+    uniqueID: 3526678677
+    locked: 0
+  - name: Objects
+    uniqueID: 3175399905
+    locked: 0
+  - name: Npc
+    uniqueID: 4246932093
     locked: 0
