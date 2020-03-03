@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 086c3a0bb3d4b3046a88b768bb32dfd5, type: 2}
   - {fileID: 11400000, guid: 53162fed20cca29429f709e0f1fd331c, type: 2}
   name: Maurits
+  trainerTheme: {fileID: 8300000, guid: e69c395bdf0a52c43b207b74767d8844, type: 3}

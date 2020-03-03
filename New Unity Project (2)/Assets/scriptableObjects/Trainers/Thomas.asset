@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad9570789ec43a849b104a2a9e58aacc, type: 2}
   - {fileID: 11400000, guid: f2231d7e2ac09db4983fe0757d2ea02d, type: 2}
   name: Thomas
+  trainerTheme: {fileID: 8300000, guid: 86cc4310146b63146b6f537986e3f08f, type: 3}

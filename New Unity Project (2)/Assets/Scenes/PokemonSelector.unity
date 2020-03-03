@@ -1780,12 +1780,16 @@ MonoBehaviour:
   inBattle: 0
   automateMoveSelection: 0
   musicSource: {fileID: 1615372262}
-  mapMusic: {fileID: 8300000, guid: dbca8489f2901cc42abddaf1f1e4d7d1, type: 3}
+  mapMusic: {fileID: 8300000, guid: 510b25cb46da286438536108f8b1257d, type: 3}
   firsPokemonIndex: 0
   currentPokemonIndex: 0
   enemyPokemonIndex: 0
   EnemyHps: 
   trainersDefeated: []
+  currentMapScene:
+    m_Handle: 0
+  playerPosInMap: {x: 0, y: 0, z: 0}
+  usePlayerPosOnLoad: 0
 --- !u!4 &1615372261
 Transform:
   m_ObjectHideFlags: 0
