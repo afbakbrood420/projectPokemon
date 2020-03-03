@@ -31,6 +31,9 @@ public class party : MonoBehaviour
     public int enemyPokemonIndex;
     public List<int> EnemyHps;
     public List<Trainer> trainersDefeated;
+    public Scene currentMapScene;
+    public Vector3 playerPosInMap;
+    public bool usePlayerPosOnLoad = false;
     /*
      * this script is designed to keep track of variables across scenes. the data in this object can be accessed by all scripts in a scene.
      * in start we make sure that this object is immortal, which means that it is not scene bound.
@@ -126,7 +129,7 @@ public class party : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Scenes/map");
+            SceneManager.LoadScene(currentMapScene);
         }
     }
     //delegete 
@@ -151,10 +154,6 @@ public class party : MonoBehaviour
 
             //store the hps of the enemy
             EnemyHps = battle_Script.enemyHps;
-        }
-        else
-        {
-
         }
         SceneManager.LoadScene("Scenes/inventory");
     }
