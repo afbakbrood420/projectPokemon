@@ -129,7 +129,7 @@ public class party : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(currentMapScene);
+            SceneManager.LoadScene(currentMapScene.buildIndex);
         }
     }
     //delegete 

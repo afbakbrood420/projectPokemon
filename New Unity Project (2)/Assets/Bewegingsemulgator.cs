@@ -16,6 +16,7 @@ public class Bewegingsemulgator : MonoBehaviour
     //Eigenschap van walkDirection, checkt of er iets staat waar hij niet mag komen, bijvoorbeeld muren of voorwerpen.
 
     public LayerMask SceneShifter;
+    private door closestDoor;
 
     void Start()
     //Wat de computer bij het opstarten moet laden / uitvoeren.
@@ -51,8 +52,31 @@ public class Bewegingsemulgator : MonoBehaviour
             }
             if (Physics2D.OverlapCircle(transform.position, 0.05f, SceneShifter))
             {
-                SceneManager.LoadScene("map2");
+                //omdat wij geen gameobject van de deur kunnen krijgen uit deze if statement, vinden wij hier de dichstbijzijnde deur
+                //en gebruiken die
+                closestDoor = null;
+                foreach (door door in FindObjectsOfType<door>())
+                {
+                    //zorgt dat de closestdoor niet null is en er geen exceptions worden gegooid.
+                    if (closestDoor == null)
+                    {
+                        closestDoor = door;
+                    }
+
+                    //als de door dichterbij is dan de tot nu closest door, verplaats de closest door dan
+                    else if (getDistance(door.gameObject) < getDistance(closestDoor.gameObject))
+                    {
+                        closestDoor = door;
+                    }
+                }
+                walkDirection.position = closestDoor.otherSide.position;
+                transform.position = closestDoor.otherSide.position;
             }
         }
+    }
+    float getDistance(GameObject target)
+    {
+        // ((x1-x2)^2+(y1-y2)^2)^0.5 <-- pythagoras formula for the distance 
+        return Mathf.Pow(Mathf.Pow(gameObject.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(gameObject.transform.position.y - target.transform.position.y, 2), 0.5f);
     }
 }
