@@ -42,7 +42,7 @@ public class Bewegingsemulgator : MonoBehaviour
                 {
                     walkDirection.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
- 
+
             }
 
             else if ((Input.GetAxisRaw("Vertical")) == 1f || (Input.GetAxisRaw("Vertical") == -1f))
@@ -73,8 +73,11 @@ public class Bewegingsemulgator : MonoBehaviour
                         closestDoor = door;
                     }
                 }
-                walkDirection.position = closestDoor.otherSide.position;
-                transform.position = closestDoor.otherSide.position;
+                if (closestDoor.isOpen())
+                {
+                    walkDirection.position = closestDoor.otherSide.position;
+                    transform.position = closestDoor.otherSide.position;
+                }
             }
 
             //checkfortrainers
@@ -82,17 +85,26 @@ public class Bewegingsemulgator : MonoBehaviour
             {
                 foreach (trainerInMap trainer in FindObjectsOfType<trainerInMap>())
                 {
-                    //zorgt dat de closestdoor niet null is en er geen exceptions worden gegooid.
+                    //zorgt dat de closest trainer niet null is en er geen exceptions worden gegooid.
                     if (closestTrainer == null)
                     {
                         closestTrainer = trainer;
                     }
 
-                    //als de door dichterbij is dan de tot nu closest door, verplaats de closest door dan
                     else if (getDistance(trainer.gameObject) < getDistance(closestTrainer.gameObject))
                     {
                         closestTrainer = trainer;
                     }
+                }
+                if (closestTrainer.hasBeenBeaten == false)
+                {
+                    closestTrainer.battle();
+                }
+                else
+                {
+                    Debug.Log("blocking...");
+                    //makes sure that the door behaves as a blocker when closed
+                    walkDirection.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
                 }
             }
         }
@@ -103,3 +115,4 @@ public class Bewegingsemulgator : MonoBehaviour
         return Mathf.Pow(Mathf.Pow(gameObject.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(gameObject.transform.position.y - target.transform.position.y, 2), 0.5f);
     }
 }
+

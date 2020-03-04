@@ -5,13 +5,23 @@ using UnityEngine;
 public class trainerInMap : MonoBehaviour
 {
     public Trainer trainer;
+    public bool hasBeenBeaten;
     private party Party;
     private void Start()
     {
         Party = GameObject.FindObjectOfType<party>();
+        if (Party.trainersDefeated.Contains(trainer))
+        {
+            hasBeenBeaten = true;
+        }
     }
     public void battle()
     {
-        Party.startFight(trainer);
+        if (hasBeenBeaten == false)
+        {
+            Party.startFight(trainer);
+        }
     }
 }
+
+

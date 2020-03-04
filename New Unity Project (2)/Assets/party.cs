@@ -12,7 +12,7 @@ public class party : MonoBehaviour
     public List<Pokemon> pokemons = new List<Pokemon> { };
     public List<int> HPs = new List<int> { };
     public List<List<move>> moveSets = new List<List<move>> { };
-    public List<bool> fainted = new List<bool> {  };
+    public List<bool> fainted = new List<bool> { };
     public List<Item> items = new List<Item> { };
     public List<int> itemAmounts = new List<int> { };
 
@@ -20,6 +20,9 @@ public class party : MonoBehaviour
     public bool isTestParty;
     public bool inBattle = false;
     public bool automateMoveSelection = false;
+
+    [Header("Misc")]
+    public Trainer endBoss;
 
     [Header("audio")]
     public AudioSource musicSource;
@@ -93,7 +96,7 @@ public class party : MonoBehaviour
     public void setMoves(List<List<move>> newMoves)
     {
         moveSets = newMoves;
-        SceneManager.LoadScene("Scenes/map");
+        SceneManager.LoadScene("Scenes/Places/map");
     }
 
     //this is called once an item is used in the inventory scene
@@ -121,7 +124,7 @@ public class party : MonoBehaviour
             if (item != null) //if the player used an item in the inventory, make sure that the player spends a turn doing that
             {
                 lastUsedItem = item;
-                SceneManager.sceneLoaded += onSceneLoad; 
+                SceneManager.sceneLoaded += onSceneLoad;
                 //we are adding an action to an event here. The event is triggered once
                 //the new scene is loaded, because the objects are not instantiated yet.
                 //when using scenemanager.loadscene the scene is loaded the next frame, so we cant do GameObject.Find() which we need.
@@ -129,7 +132,7 @@ public class party : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(currentMapScene.buildIndex);
+            SceneManager.LoadScene("Scenes/Pla/map");
         }
     }
     //delegete 
@@ -165,8 +168,13 @@ public class party : MonoBehaviour
     }
     public void endBattle()
     {
-        SceneManager.LoadScene("Scenes/map");
+        inBattle = false;
+        SceneManager.LoadScene("Scenes/Places/map");
         trainersDefeated.Add(trainer);
+        if (trainer == endBoss)
+        {
+            winGame();
+        }
     }
     public void lose()
     {
@@ -185,8 +193,14 @@ public class party : MonoBehaviour
         }
         musicSource.Play();
     }
+    void winGame()
+    {
+        //displays the winscreen
+        SceneManager.LoadScene("Scenes/winScreen");
+    }
 
 
 }
+
 
 

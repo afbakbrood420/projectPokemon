@@ -44,7 +44,7 @@ public class Battle_Script : MonoBehaviour
     [Header("misc")]
     public Text Eventtekst;
     public party pokemonparty;
- 
+
     public battlesceneHider longmoves;
     public battlesceneHider fbpr;
     public move incapacitatedMove;
@@ -71,6 +71,7 @@ public class Battle_Script : MonoBehaviour
     private move enemyMoveWhenItem;
     private bool playerHasFreeAction = false;
     private bool playerWon = false;
+    private bool denyFreeAction;
 
 
     void Start()
@@ -174,9 +175,9 @@ public class Battle_Script : MonoBehaviour
         }
         catch (System.Exception)
         {
-            
+
         }
-        
+
 
     }
 
@@ -244,7 +245,7 @@ public class Battle_Script : MonoBehaviour
 
     void chooseMove(int moveIndex)
     {
-        if (playerHasFreeAction)
+        if (playerHasFreeAction&&denyFreeAction == false)
         {
             StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], incapacitatedMove));
         }
@@ -253,6 +254,7 @@ public class Battle_Script : MonoBehaviour
             StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))]));
         }
         playerHasFreeAction = false;
+        denyFreeAction = false;
     }
 
 
@@ -423,7 +425,7 @@ public class Battle_Script : MonoBehaviour
     public IEnumerator enemyFreeAction()
     {
         yield return new WaitForEndOfFrame();
-        if (playerHasFreeAction)
+        if (playerHasFreeAction && denyFreeAction == false)
         {
             enemyMoveWhenItem = incapacitatedMove;
             playerHasFreeAction = false;
@@ -433,6 +435,14 @@ public class Battle_Script : MonoBehaviour
             enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))];
         }
         playerHasFreeAction = false;
+        denyFreeAction = false;
+        if (denyFreeAction)
+        {
+            interruptBattleRound();
+            checkForFaint();
+            StopCoroutine(enemyFreeAction());
+        }
+
         Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
         yield return new WaitForSeconds(2);
         DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem, ourpok));
@@ -447,22 +457,22 @@ public class Battle_Script : MonoBehaviour
     void checkForFaint()
     {
         if (enemyHps[enemyPokIndex] <= 0)
-        {
+        { //enemy fainted
             Debug.Log("enemy pokemon fainted");
             interruptBattleRound();
-            enemyHps[enemyPokIndex] = 0;
+            enemyHps[enemyPokIndex] = 0; //make sure that the hp is not negative
 
-            playerHasFreeAction = true;
-            enemyPokIndex += 1;
-            if (enemyPokIndex > pokemonparty.trainer.pokemons.Count -1)
+            enemyPokIndex += 1; //make sure that the enemy swaps to the next pokemon
+
+            if (enemyPokIndex > pokemonparty.trainer.pokemons.Count - 1) //checks if the enemy ran out of pokemon
             {
-                pokemonparty.endBattle();
+                pokemonparty.endBattle(); //player wins
                 return;
             }
 
-            enemypok = pokemonparty.trainer.pokemons[enemyPokIndex];
+            enemypok = pokemonparty.trainer.pokemons[enemyPokIndex]; //swaps to the new pokemon
             updateUI();
-            Debug.Log(playerHasFreeAction);
+            denyFreeAction = true;
         }
         else if (pokemonparty.HPs[ourpokIndex] <= 0)
         {
@@ -473,6 +483,7 @@ public class Battle_Script : MonoBehaviour
             pokemonButtonFunction();
             pokSlcBack.interactable = false;
             fbpr.changeVisibility(false);
+            denyFreeAction = true;
         }
         checkforWinnings();
     }
@@ -514,5 +525,6 @@ public class Battle_Script : MonoBehaviour
 // berekening - hp / displaybar
 //eventtekst, effectiveness
 //reset
+
 
 
