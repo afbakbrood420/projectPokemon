@@ -4870,6 +4870,7 @@ GameObject:
   - component: {fileID: 1520872591}
   - component: {fileID: 1520872592}
   - component: {fileID: 1520872593}
+  - component: {fileID: 1520872594}
   m_Layer: 11
   m_Name: BrouwerGymleader
   m_TagString: Untagged
@@ -4967,6 +4968,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.21690494}
   m_EdgeRadius: 0
+--- !u!114 &1520872594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520872590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc306f9c74033d84bafeea1ee3e1d437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainer: {fileID: 11400000, guid: 9d0f1dca6edf6794e8b09324ba4a700c, type: 2}
 --- !u!1 &1547246726
 GameObject:
   m_ObjectHideFlags: 0
