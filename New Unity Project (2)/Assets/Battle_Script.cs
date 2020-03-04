@@ -408,7 +408,14 @@ public class Battle_Script : MonoBehaviour
         fbpr.changeVisibility(false);
 
         Eventtekst.text = ourpok.name + " I choose you!";
-        StartCoroutine(enemyFreeAction());
+        if (denyFreeAction == false)
+        {
+            StartCoroutine(enemyFreeAction());
+        }
+        else
+        {
+            fbpr.changeVisibility(true);
+        }
     }
 
 

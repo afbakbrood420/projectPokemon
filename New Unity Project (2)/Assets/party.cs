@@ -197,6 +197,7 @@ public class party : MonoBehaviour
     {
         //displays the winscreen
         SceneManager.LoadScene("Scenes/winScreen");
+        Destroy(gameObject); //destroys object because we dont need it anymore.
     }
 
 

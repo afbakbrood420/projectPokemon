@@ -5958,7 +5958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trainer: {fileID: 11400000, guid: 9d0f1dca6edf6794e8b09324ba4a700c, type: 2}
-  hasBeenBeaten: 1
+  hasBeenBeaten: 0
 --- !u!1 &1547246726
 GameObject:
   m_ObjectHideFlags: 0
