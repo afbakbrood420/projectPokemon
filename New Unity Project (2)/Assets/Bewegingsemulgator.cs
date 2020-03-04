@@ -83,15 +83,15 @@ public class Bewegingsemulgator : MonoBehaviour
                 foreach (trainerInMap trainer in FindObjectsOfType<trainerInMap>())
                 {
                     //zorgt dat de closestdoor niet null is en er geen exceptions worden gegooid.
-                    if (closestDoor == null)
+                    if (closestTrainer == null)
                     {
-                        closestDoor = trainer;
+                        closestTrainer = trainer;
                     }
 
                     //als de door dichterbij is dan de tot nu closest door, verplaats de closest door dan
-                    else if (getDistance(door.gameObject) < getDistance(closestDoor.gameObject))
+                    else if (getDistance(trainer.gameObject) < getDistance(closestTrainer.gameObject))
                     {
-                        closestDoor = door;
+                        closestTrainer = trainer;
                     }
                 }
             }
