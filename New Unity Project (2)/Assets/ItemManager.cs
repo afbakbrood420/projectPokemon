@@ -24,20 +24,20 @@ public class ItemManager : MonoBehaviour
         foreach (Item item in Items)
         {
             itemObjects.Add((Instantiate(itemPrefab, gameObject.transform).GetComponent("itemDisplayer") as itemDisplayer));
-            itemObjects[count].setItem(item,amounts[count]);
+            //makes a copy of the prefab for each item and make it a child of this object, and stores it in the list. 
+            itemObjects[count].setItem(item,amounts[count]); //makes sure the amount is displayed and the prefab knows which item it holds
             count = count + 1;
         }
     }
 
-    public void chooseItem(Item item)
+    public void chooseItem(Item item) 
     {
         chosenItem = item;
-        showHide.show();
+        showHide.show(); //makes the target finder appear, so the player can choose what pokemon it wants to revive
     }
     public void chooseTarget(int index)
     {
         showHide.hide();
-        Party.applyItem(chosenItem,index);
-        //Party.exitInventory();
+        Party.applyItem(chosenItem,index); //makes the party handle the item
     }
 }

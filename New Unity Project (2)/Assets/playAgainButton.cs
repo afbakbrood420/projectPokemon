@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class playAgainButton : MonoBehaviour
 {
     public Button btn;
-    // Start is called before the first frame update
+    
+    //this script just moves to the titlescreen when button has been pressed.
+
     void Start()
     {
         btn.onClick.AddListener(backToTitleScreen);

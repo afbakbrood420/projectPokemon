@@ -73,6 +73,14 @@ public class Battle_Script : MonoBehaviour
     private bool playerWon = false;
     private bool denyFreeAction;
 
+    /*
+     * dit is verreweg het grootste script uit project pokemon. Het handelt de battlescene, de meest complexe scene bijna helemaal
+     * alleen. Hij is verantwoordelijk voor alle UI (daarom staan hierboven heel veel texts en images), hij is verantwoordelijk voor
+     * het berekenen van de damage en het kijken of de pokemon al dood is, en het is verantwoordelijk voor het bijhouden van de
+     * tegenstanders variabelen.
+     */
+
+
 
     void Start()
     {
@@ -94,7 +102,8 @@ public class Battle_Script : MonoBehaviour
         pokSlcBack.onClick.AddListener(pokSlcBackBtnFunction);
         initiateMoveButtons();
 
-
+        //als je naar inventory gaat worden alle variabelen hierin verwijderd, in party niet.
+        //dus daarom kijken wij of we het gevecht niet opnieuw moeten oppakken
         if (pokemonparty.inBattle)
         {
             //resuming the battle
@@ -106,45 +115,48 @@ public class Battle_Script : MonoBehaviour
             ourpokIndex = pokemonparty.currentPokemonIndex;
             ourpok = pokemonparty.pokemons[ourpokIndex];
         }
-        else
+        else 
         {
             //making a new battle
-            pokemonparty.inBattle = true;
+            pokemonparty.inBattle = true; //zorg dat party weet dat wij in battle zijn
             ourpok = pokemonparty.pokemons[0];
-            ourpokIndex = 0;
+            ourpokIndex = 0; 
             enemypok = pokemonparty.trainer.pokemons[0];
             enemyPokIndex = 0;
 
+            //zorg dat wij de hp lijst van de tegenstander volle hps heeft
             foreach (Pokemon pokemon in pokemonparty.trainer.pokemons)
             {
                 enemyHps.Add(pokemon.HP);
             }
+            pokemonparty.resetMusic(); //update de muziek
         }
 
         Eventtekst.text = "What will " + ourpok.name + " do?";
         //aanroepen van updateUI
         updateUI();
-        pokemonparty.resetMusic();
     }
 
+    //deze functie word geroepen door een knop
     void Fightbuttonfunction()
     {
-        longmoves.changeVisibility(true);
-        fbpr.changeVisibility(false);
+        longmoves.changeVisibility(true); //moves worden zichtbaar
+        fbpr.changeVisibility(false); //fight button run en bag onzichtbaar
     }
 
+    //deze functie word gebruikt om terug te gaan als je de fight al hebt ingedrukt
     void Backbuttonfunction()
     {
-        longmoves.changeVisibility(false);
+        longmoves.changeVisibility(false); 
         fbpr.changeVisibility(true);
     }
     void pokemonButtonFunction()
     {
-        pokSlcShowHide.show();
+        pokSlcShowHide.show(); //laat de keuze van andere pokemons zien
     }
     void pokSlcBackBtnFunction()
     {
-        pokSlcShowHide.hide();
+        pokSlcShowHide.hide(); //hide de keuze van andere pokemons pokemon
     }
 
     void updateUI()
@@ -160,10 +172,10 @@ public class Battle_Script : MonoBehaviour
         Enemypokname.text = enemypok.name;
 
         //veranderen 'move #' naar *movenaam*
-        move1.text = ourpok.moves[0].name;
-        move2.text = ourpok.moves[1].name;
-        move3.text = ourpok.moves[2].name;
-        move4.text = ourpok.moves[3].name;
+        move1.text = pokemonparty.moveSets[ourpokIndex][0].name;
+        move2.text = pokemonparty.moveSets[ourpokIndex][1].name; ;
+        move3.text = pokemonparty.moveSets[ourpokIndex][2].name; ;
+        move4.text = pokemonparty.moveSets[ourpokIndex][3].name; ;
 
         // ourpok hp
         OurPokMaxHp.text = ourpok.HP.ToString();
@@ -181,17 +193,18 @@ public class Battle_Script : MonoBehaviour
 
     }
 
-    //coroutines duren langer dan 1 frame dit is een coroutine
+    //coroutines duren langer dan 1, frame dit is een coroutine. deze coroutine word geroepen door een van de move knoppen
     IEnumerator Startbattleround(move attackOur, move attackEnemy)
     {
-        longmoves.changeVisibility(false);
+        longmoves.changeVisibility(false); //alles invisible
         fbpr.changeVisibility(false);
-        Debug.Log("enemyPok used: " + attackEnemy.name);
+        Debug.Log("enemyPok used: " + attackEnemy.name); //eigenlijk python print functie
         Debug.Log("ourPok used: " + attackOur.name);
 
+        //de pokemon met de hoogste snelheid gaat eerst, als gelijk dan wint de speler
         if (ourpok.Speed >= enemypok.Speed)
         {
-            playerIsFirst = true;
+            playerIsFirst = true; 
         }
         else
         {
@@ -200,14 +213,14 @@ public class Battle_Script : MonoBehaviour
 
         yield return new WaitForSeconds(2); //hier wachten wij 1 seconden voordat het script word hervat
         //move 1
-        displayAttack(attackEnemy, attackOur, true);
+        displayAttack(attackEnemy, attackOur, true); //laat de aanval op het schermkomen
 
         yield return new WaitForSeconds(2);
-        useMove(attackOur, attackEnemy, true);
+        useMove(attackOur, attackEnemy, true); //berekent de damage van de move en trekt het van het hp af.
         updateUI();
 
         yield return new WaitForSeconds(2);
-        displayAttack(attackEnemy, attackOur, false);
+        displayAttack(attackEnemy, attackOur, false); //de andere move
 
         yield return new WaitForSeconds(2);
         //battleselection
@@ -218,34 +231,36 @@ public class Battle_Script : MonoBehaviour
 
         //eventtekst
         //hit. wacht 1 tel, 2e move
-        longmoves.changeVisibility(false);
+        longmoves.changeVisibility(false); //alles weer klaarmaken voor de speler om opnieuw te gebruiken
         fbpr.changeVisibility(true);
         Eventtekst.text = "What will " + ourpok.name + " do?";
         updateUI();
-        checkForFaint();
+        checkForFaint(); //kijkt naar de pokemons hp of ze dood zijn
     }
 
+    //word geroepen als je op bag clickt
     void bag()
     {
-        pokemonparty.accesInventory();
+        pokemonparty.accesInventory(); //zie party.cs voor meer info
     }
-    void endBattle()
+    void endBattle() //de speler heeft gewonnen
     {
-        pokemonparty.inBattle = false;
-        pokemonparty.trainersDefeated.Add(pokemonparty.trainer);
+        pokemonparty.inBattle = false; //laat de party dat weten
+        pokemonparty.trainersDefeated.Add(pokemonparty.trainer); 
         pokemonparty.endBattle();
     }
     void initiateMoveButtons()
     {
-        move0b.onClick.AddListener(() => chooseMove(0));
-        move1b.onClick.AddListener(() => chooseMove(1));
+        move0b.onClick.AddListener(() => chooseMove(0)); //dit zorgt ervoor dat de button weet welke index hij aan zijn functie mee
+        move1b.onClick.AddListener(() => chooseMove(1)); //moet geven
         move2b.onClick.AddListener(() => chooseMove(2));
         move3b.onClick.AddListener(() => chooseMove(3));
     }
 
+    //word geroepen door een move button
     void chooseMove(int moveIndex)
     {
-        if (playerHasFreeAction&&denyFreeAction == false)
+        if (playerHasFreeAction&&denyFreeAction == false) //als de speler een vrije move heeft
         {
             StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], incapacitatedMove));
         }
@@ -253,11 +268,11 @@ public class Battle_Script : MonoBehaviour
         {
             StartCoroutine(Startbattleround(pokemonparty.moveSets[ourpokIndex][moveIndex], enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))]));
         }
-        playerHasFreeAction = false;
+        playerHasFreeAction = false; //reset de vrije move
         denyFreeAction = false;
     }
 
-
+    //kijkt hoe effectief de move is, in het kader van, water is goed tegen vuur etc.
     float checkEffectiveness(move usedMove, Pokemon Defender)
     {
         effectiveness = 1f;
@@ -288,11 +303,11 @@ public class Battle_Script : MonoBehaviour
                 }
             }
         }
-        DisplayEffectiveness(effectiveness);
+        DisplayEffectiveness(effectiveness); //zorg dat de speler dit te zien krijgt
         return effectiveness;
     }
 
-
+    
     void DisplayEffectiveness(float effectiveness)
     {
         if (effectiveness > 1f)
@@ -341,17 +356,17 @@ public class Battle_Script : MonoBehaviour
         return atDefResult;
     }
 
-
+    //voegt alle damage bij elkaar en returnt die waarde
     float CalcDamage(Pokemon defender, Pokemon attacker, move Move)
     {
         damage = atDef(defender, attacker, Move) * stab(defender, attacker, Move) * checkEffectiveness(Move, defender) * Move.power * 0.25f;
         return damage;
     }
 
-
+    
     void useMove(move attackOur, move attackEnemy, bool isFirstMove)
     { //all the if statements are for checking which pokemon goes first
-        if (isFirstMove)
+        if (isFirstMove) 
         {
             if (playerIsFirst)
             {
@@ -365,7 +380,7 @@ public class Battle_Script : MonoBehaviour
                 pokemonparty.HPs[ourpokIndex] = pokemonparty.HPs[ourpokIndex] - (int)Mathf.Round(CalcDamage(ourpok, enemypok, attackEnemy));
             }
         }
-        else
+        else 
         {
             if (playerIsFirst == false)
             {
@@ -379,46 +394,52 @@ public class Battle_Script : MonoBehaviour
         checkForFaint();
     }
 
-
+    //laat de aanval op het scherm komen
     void displayAttack(move attackEnemy, move attackOur, bool isFirstMove)
     {
-        if (playerIsFirst == isFirstMove) { Eventtekst.text = ourpok.name + " used " + attackOur.name; }
-        else { Eventtekst.text = enemypok.name + " used " + attackEnemy.name; }
+        if (playerIsFirst == isFirstMove)
+        {
+            Eventtekst.text = ourpok.name + " used " + attackOur.name;
+        }
+        else
+        {
+            Eventtekst.text = enemypok.name + " used " + attackEnemy.name;
+        }
     }
 
-
+    //word aangeroepen als er bijvoorbeeld een pokemon dood is gegaan
     void interruptBattleRound()
     {
         longmoves.changeVisibility(false);
         fbpr.changeVisibility(true);
         Eventtekst.text = "What will " + ourpok.name + " do?";
         updateUI();
-        StopAllCoroutines();
+        StopAllCoroutines(); //zorgt dat de normale battlecycle onderbroken word
     }
 
-
+    //word geroepen door een knop in het swap pokemon menuutje
     public void switchPokemon(int newIndex)
     {
-        pokSlcBack.interactable = true;
+        pokSlcBack.interactable = true; //zorgt dat het terugknop weer werkt nadat hij is uitgeschakelt doordat de pokemon dood is ofzo
         ourpokIndex = newIndex;
         ourpok = pokemonparty.pokemons[newIndex];
         pokSlcShowHide.hide();
         updateUI();
-        longmoves.changeVisibility(false);
+        longmoves.changeVisibility(false); 
         fbpr.changeVisibility(false);
 
         Eventtekst.text = ourpok.name + " I choose you!";
-        if (denyFreeAction == false)
+        if (denyFreeAction == false) //als jij geforceerd pokemon wisselt dan krijgt de tegenstander geen vrije move, anders wel
         {
             StartCoroutine(enemyFreeAction());
         }
         else
         {
-            fbpr.changeVisibility(true);
+            fbpr.changeVisibility(true); 
         }
     }
 
-
+    //zorgt dat de tegenstander een vrije move krijgt als jij een item gebruikt en zet het op het scherm
     public void spendItem(Item item)
     {
         longmoves.changeVisibility(false);
@@ -431,8 +452,8 @@ public class Battle_Script : MonoBehaviour
 
     public IEnumerator enemyFreeAction()
     {
-        yield return new WaitForEndOfFrame();
-        if (playerHasFreeAction && denyFreeAction == false)
+        yield return new WaitForEndOfFrame(); //zorgt dat alles goed is ingeladen, een bug blijkbaar als dit niet is
+        if (playerHasFreeAction && denyFreeAction == false) //als de speler een vrije move krijgt, word de tegenstander incapacitated
         {
             enemyMoveWhenItem = incapacitatedMove;
             playerHasFreeAction = false;
@@ -442,14 +463,14 @@ public class Battle_Script : MonoBehaviour
             enemyMoveWhenItem = enemypok.moves[(int)Mathf.Round(Random.Range(0f, 3.4f))];
         }
         playerHasFreeAction = false;
-        denyFreeAction = false;
-        if (denyFreeAction)
+        
+        if (denyFreeAction) //checkt of de tegenstander wel een vrije move heeft
         {
             interruptBattleRound();
             checkForFaint();
             StopCoroutine(enemyFreeAction());
         }
-
+        denyFreeAction = false;
         Eventtekst.text = enemypok.name + " used " + enemyMoveWhenItem.name;
         yield return new WaitForSeconds(2);
         DisplayEffectiveness(checkEffectiveness(enemyMoveWhenItem, ourpok));
@@ -461,7 +482,7 @@ public class Battle_Script : MonoBehaviour
     }
 
 
-    void checkForFaint()
+    void checkForFaint() //kijkt naar dode pokemons
     {
         if (enemyHps[enemyPokIndex] <= 0)
         { //enemy fainted
@@ -482,41 +503,39 @@ public class Battle_Script : MonoBehaviour
             denyFreeAction = true;
         }
         else if (pokemonparty.HPs[ourpokIndex] <= 0)
-        {
+        { //onze pokemon faint
             Debug.Log("our pokemon fainted");
-            interruptBattleRound();
-            pokemonparty.HPs[ourpokIndex] = 0;
-            pokemonparty.fainted[ourpokIndex] = false;
+            interruptBattleRound(); 
+            pokemonparty.HPs[ourpokIndex] = 0; 
+            pokemonparty.fainted[ourpokIndex] = false; //laat de party weten dat hij dood is
             pokemonButtonFunction();
-            pokSlcBack.interactable = false;
+            pokSlcBack.interactable = false; 
             fbpr.changeVisibility(false);
-            denyFreeAction = true;
+            denyFreeAction = true; //zorg dat de tegenstander geen vrije move krijgt omdat dit een geforceerde swap is
         }
-        checkforWinnings();
+        checkforWinnings(); 
     }
+    
+    //kijkt of iemand gewonnen heeft
     void checkforWinnings()
     {
-        if (pokemonparty.fainted.Contains(true) == false)
+        if (pokemonparty.fainted.Contains(true) == false) //als er nog een levende pokemon is
         {
-            foreach (bool i in pokemonparty.fainted)
-            {
-                Debug.Log(i);
-            }
-            pokemonparty.lose();
+            pokemonparty.lose(); //game over
         }
         else
         {
-            playerWon = true;
+            playerWon = true; //bewijst het tegendeel hierna
             foreach (int hp in enemyHps)
             {
                 if (hp > 0)
                 {
-                    playerWon = false;
+                    playerWon = false; //kijkt dus of er nog een levende pokemon is
                 }
             }
             if (playerWon)
             {
-                pokemonparty.endBattle();
+                pokemonparty.endBattle(); //laat de player winnen
             }
         }
     }
@@ -525,13 +544,7 @@ public class Battle_Script : MonoBehaviour
 
 
 
-// eventtekst - pok used move 1
-// berekening - hp / displaybar
-//eventtekst, effectiveness
-// eventtekst - pok used move 2
-// berekening - hp / displaybar
-//eventtekst, effectiveness
-//reset
+
 
 
 

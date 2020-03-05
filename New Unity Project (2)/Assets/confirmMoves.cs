@@ -65,6 +65,7 @@ public class confirmMoves : MonoBehaviour
         {
             movesOfPokemons.Add((moveList.GetComponent("moveCollector") as moveCollector).getMoves()); //get the moves from all the move slots and put it in to a list
         }
+        movesOfPokemons[0] = moveLists[0].GetComponent<moveCollector>().getMoves();
 
         //for debugging only
         if (enableDebug)

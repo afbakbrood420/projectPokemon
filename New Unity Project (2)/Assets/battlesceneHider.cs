@@ -9,6 +9,10 @@ public class battlesceneHider : MonoBehaviour
     public List<Image> imagesToHide = new List<Image> { };
     public List<Text> textsToHide = new List<Text> { };
 
+    /*
+     * dit script zet meerdere texts aan en uit, en images, redelijk simpel
+     */
+
     public void changeVisibility(bool newVisibility)
     {
         foreach (Text text in textsToHide)

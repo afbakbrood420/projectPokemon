@@ -5,32 +5,24 @@ using UnityEngine.UI;
 
 public class displayBar : MonoBehaviour
 {
-    public Slider stretchingRt;
-
+    public Slider stretchingRt; 
     public Image rearImg;
-    
     public float value = 0.75f; //must be between 0 and 1
 
-    private float steps;
-    private float valuePerStep;
+    /*
+     * dit object is verantwoordelijk voor de controll van de displaybar;
+     * het verzet de displaybar elk frame
+     */
 
-    private void Update()
+    private void Update() //is called each frame
     {
-        stretchingRt.value = value;
+        stretchingRt.value = value; //stretching rt is een slider, dat is een geimplementeerde class van unity en kan uitbreiden en ver
+        //-kleinen
     }
+    //zorgt ervoor dat alles onzichtbaar kan worden
     public void visibility(bool visible)
     {
         stretchingRt.gameObject.SetActive(visible);
         rearImg.enabled = visible;
-    }
-    public IEnumerator slideOverTime(float newValue, float overTime, float timeStep = 0.1f)
-    {
-        steps = overTime / timeStep;
-        valuePerStep = (newValue - value)/steps;
-        for (int i = 0; i < steps; i++)
-        {
-            value = value + valuePerStep;
-            yield return new WaitForSeconds(timeStep);
-        }
     }
 }

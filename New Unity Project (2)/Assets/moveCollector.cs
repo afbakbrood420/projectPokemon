@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class moveCollector : MonoBehaviour
 {
-    public List<GameObject> chosenSlotList = new List<GameObject> { };
+    public List<snappable> chosenSlotList = new List<snappable> { };
     public List<move> moves = new List<move> { };
     public GameObject moveAdder;
     public Image pokemonIMG;
@@ -28,17 +28,18 @@ public class moveCollector : MonoBehaviour
     public List<move> getMoves()
     {
         moves.Clear();
-        foreach (GameObject slot in chosenSlotList)
+        foreach (snappable slot in chosenSlotList)
         {
             try
             { // getting move, in a try statement because it gives an error if there is no move in the slot.
-                moveToAdd = ((slot.GetComponent("snappable") as snappable).objectInSlot.GetComponent("selectMove") as selectMove).Move;
+                moveToAdd = (slot.objectInSlot.GetComponent("selectMove") as selectMove).Move;
             }
             catch
             { //if there is no move in the slot, notify the player that not all moves are assigned.
                 GameObject.FindGameObjectWithTag("popUpWindow").SendMessage("notification", errorMsgIfNoMoveAssigned);
             }
             moves.Add(moveToAdd);
+            Debug.Log(moveToAdd);
         }
         return moves;
     }
@@ -53,9 +54,9 @@ public class moveCollector : MonoBehaviour
         pokemonIMG.sprite = pokemon.sprite;
 
         //give the keys to the slots which are not in the scrollable list
-        foreach (GameObject chosenSlot in chosenSlotList)
+        foreach (snappable chosenSlot in chosenSlotList)
         {
-            chosenSlot.SendMessage("addKey", key);
+            chosenSlot.addKey( key);
         }
 
         //update the stat displayers
@@ -72,9 +73,9 @@ public class moveCollector : MonoBehaviour
     public void defaultMoves()
     {
         count = 0;
-        foreach (GameObject slot in chosenSlotList)
+        foreach (snappable slot in chosenSlotList)
         {
-            slot.GetComponent<snappable>().occupyWith(pokemonOfObject.moves[count]);
+            slot.occupyWith(pokemonOfObject.moves[count]);
             count += 1;
         }
     }

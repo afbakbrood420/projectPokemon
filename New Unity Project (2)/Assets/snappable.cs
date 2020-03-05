@@ -28,7 +28,7 @@ public class snappable : MonoBehaviour
         Instantiate(draggableMove , transform).SendMessage("setMove", Move);
     }
     //is called by the keymanager and makes sure the key is ready
-    void addKey(int newKey)
+    public void addKey(int newKey)
     {
         key = newKey;
         

@@ -51,20 +51,25 @@ public class party : MonoBehaviour
 
     void Start()
     {
+        //sets up the fainted list
         fainted = new List<bool> { };
         for (int i = 0; i < 6; i++)
         {
             fainted.Add(true);
         }
+
+        //if there is another party in the scene, suicide
         if (GameObject.FindGameObjectsWithTag("party").Length > 1)
         {
             Destroy(gameObject);
         }
-        if (isTestParty == false)
+
+        if (isTestParty == false) //this is normally the case
         {
             DontDestroyOnLoad(gameObject); //makes sure that this object is immortal
         }
-        if (automateMoveSelection)
+
+        if (automateMoveSelection) //this is only for debugging
         {
             //make test movesets by just taking the first 4
             foreach (Pokemon pokemon in pokemons)
@@ -77,19 +82,19 @@ public class party : MonoBehaviour
                 moveSets.Add(moveSetToAdd);
             }
         }
-        resetMusic();
+        resetMusic(); //updates the music
     }
     //this is called by an object in the pokemonselector screen once all the pokemons are chosen
     void IchooseThese(List<Pokemon> newParty)
     {
-        pokemons.Clear();
+        pokemons.Clear(); //clears the list
         foreach (Pokemon newPokemon in newParty)
         {
-            pokemons.Add(newPokemon);
+            pokemons.Add(newPokemon); 
             HPs.Add(newPokemon.HP);
         }
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Scenes/MoveSelector"); //move on to the moveselectorscreen
     }
 
     //this is called by an object in the moveselector screen once all the moves are chosen.
@@ -107,8 +112,9 @@ public class party : MonoBehaviour
         {
             HPs[index] = pokemons[index].HP;
         }
-        itemAmounts[items.IndexOf(item)] -= 1;
-        if (itemAmounts[items.IndexOf(item)] == 0)
+        itemAmounts[items.IndexOf(item)] -= 1; //makes the item have 1 less amount
+
+        if (itemAmounts[items.IndexOf(item)] == 0) //if you are out of items
         {
             items.Remove(item);
         }
@@ -132,7 +138,7 @@ public class party : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Scenes/Pla/map");
+            SceneManager.LoadScene("Scenes/Places/map");
         }
     }
     //delegete 
@@ -160,27 +166,27 @@ public class party : MonoBehaviour
         }
         SceneManager.LoadScene("Scenes/inventory");
     }
-    public void startFight(Trainer newTrainer)
+    public void startFight(Trainer newTrainer) //moves on to the battle scene and stores the trainer
     {
         trainer = newTrainer;
         SceneManager.LoadScene("Scenes/battle");
 
     }
-    public void endBattle()
+    public void endBattle() //the player won
     {
         inBattle = false;
-        SceneManager.LoadScene("Scenes/Places/map");
-        trainersDefeated.Add(trainer);
-        if (trainer == endBoss)
+        SceneManager.LoadScene("Scenes/Places/map"); //go to the mapscene
+        trainersDefeated.Add(trainer); //store the trainer defeated
+        if (trainer == endBoss) 
         {
             winGame();
         }
     }
-    public void lose()
+    public void lose() //called when all pokemons died
     {
         SceneManager.LoadScene("Scenes/titleScreen");
     }
-    public void resetMusic()
+    public void resetMusic() //is called on start of certain scenes
     {
         musicSource.Stop();
         if (inBattle)

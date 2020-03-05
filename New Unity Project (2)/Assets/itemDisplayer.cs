@@ -12,17 +12,22 @@ public class itemDisplayer : MonoBehaviour
     public Image image;
     public Button btn;
 
+    /*
+     * handles UI of the item displayer prefab
+     */
+
     public void setItem(Item newItem, int newAmount)
     {
-        item = newItem;
+        item = newItem; 
         amount = newAmount;
         nameText.text = item.name;
-        amountText.text = amount.ToString() + "X";
+        amountText.text = amount.ToString() + "X"; //sets the item amount
         image.sprite = item.sprite;
-        btn.onClick.AddListener(findTarget);
+        btn.onClick.AddListener(findTarget); //sets up the button
     }
     void findTarget()
     {
         GameObject.FindObjectOfType<ItemManager>().GetComponent<ItemManager>().chooseItem(item);
+        //finds the itemmanager and calls the chooseItem method
     }
 }

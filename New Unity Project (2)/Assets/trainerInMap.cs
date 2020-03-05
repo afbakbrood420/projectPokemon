@@ -7,7 +7,12 @@ public class trainerInMap : MonoBehaviour
     public Trainer trainer;
     public bool hasBeenBeaten;
     private party Party;
-    private void Start()
+
+    /*
+     * this script stores a trainer in an object in the map. So you can Identify which puppet is which trainer
+     */
+
+    private void Start() //checks if this trainer has been beaten.
     {
         Party = GameObject.FindObjectOfType<party>();
         if (Party.trainersDefeated.Contains(trainer))
@@ -15,7 +20,7 @@ public class trainerInMap : MonoBehaviour
             hasBeenBeaten = true;
         }
     }
-    public void battle()
+    public void battle() //wont start a fight when the trainer is beaten
     {
         if (hasBeenBeaten == false)
         {

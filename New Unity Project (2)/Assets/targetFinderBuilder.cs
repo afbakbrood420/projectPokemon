@@ -15,20 +15,21 @@ public class targetFinderBuilder : MonoBehaviour
 
     void Start()
     {
-        Party = (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party);
+        Party = (GameObject.FindGameObjectWithTag("party").GetComponent("party") as party); //gets party
         foreach (Pokemon pokemon in Party.pokemons)
         {
-            targetFinders.Add(Instantiate(targetFinderPrefab, transform).GetComponent("targetFinder") as targetFinder);
-            targetFinders[count].setPokemon(pokemon, Party.HPs[count], count);
+            targetFinders.Add(Instantiate(targetFinderPrefab, transform).GetComponent("targetFinder") as targetFinder); //makes a copy of the prefab,
+            //and makes this object the parent. Also gets the component of this prefab and puts it in the list
+            targetFinders[count].setPokemon(pokemon, Party.HPs[count], count); //give the targetfinder the pokemon
             count = count + 1;
         }
-        ShowHide.initiate();
+        ShowHide.initiate(); //lets the showhide check out the new list
     }
     public void show()
     {
         ShowHide.show();
     }
-    void Update()
+    void Update() //updates the hp each frame
     {
         count = 0;
         foreach (targetFinder TargetFinder in targetFinders)
